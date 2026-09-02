@@ -1,4 +1,5 @@
-import React, { useRef, useState } from 'react';
+
+import { useRef, useState } from 'react';
 import { motion, useMotionValue, useTransform, animate } from 'framer-motion';
 import styles from './ZipTransformation.module.css';
 

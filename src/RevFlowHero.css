@@ -1,0 +1,306 @@
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+  --primary-navy: #1b365d;
+  --secondary-blue: #2b7a9e;
+  --bg-color: #EDF2F7;
+  --white: #ffffff;
+  --text-dark: #1e293b;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body, html {
+  font-family: 'Inter', sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-dark);
+  width: 100%;
+  overflow-x: hidden;
+}
+
+.revflow-hero-section {
+  width: 100%;
+  height: 100vh;
+  background-color: var(--bg-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 40px;
+  overflow: hidden;
+}
+
+.hero-page-wrapper {
+  width: 100%;
+  max-width: 1350px;
+  height: 100%;
+  max-height: 650px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Navbar */
+.revflow-navbar {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--white);
+  border-radius: 40px;
+  padding: 6px 14px 6px 26px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+}
+
+.logo-image {
+  height: 36px;
+  width: auto;
+  display: block;
+}
+
+.nav-links {
+  display: flex;
+  gap: 36px;
+}
+
+.nav-link {
+  text-decoration: none;
+  color: #475569;
+  font-size: 0.88rem;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.nav-link:hover, .nav-link.active {
+  color: var(--primary-navy);
+  font-weight: 600;
+}
+
+/* Buttons */
+.cta-button {
+  background-color: var(--primary-navy);
+  color: var(--white);
+  border: none;
+  border-radius: 30px;
+  padding: 5px 5px 5px 18px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 3px 10px rgba(27, 54, 93, 0.15);
+  white-space: nowrap;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.cta-button:hover {
+  transform: translateY(-2px);
+  background-color: #244675;
+}
+
+.main-cta {
+  padding: 5px 5px 5px 22px;
+  font-size: 0.95rem;
+}
+
+.cta-icon-circle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  background: var(--white);
+  color: var(--primary-navy);
+  border-radius: 50%;
+  font-size: 1.8rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.main-cta .cta-icon-circle {
+  width: 36px;
+  height: 36px;
+  font-size: 1.8rem;
+  font-weight: 800;
+}
+
+/* Hero Content Grid */
+.hero-container {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1.25fr;
+  align-items: center;
+  gap: 20px;
+}
+
+/* Left Content */
+.hero-text-content {
+  text-align: left;
+}
+
+.hero-title {
+  font-family: 'Caveat', cursive;
+  font-size: 3.5rem;
+  font-weight: 700;
+  line-height: 0.95;
+  color: var(--primary-navy);
+  margin-bottom: 16px;
+  transform: translateY(-50px);
+}
+
+.highlight-scale {
+  color: var(--secondary-blue);
+  font-style: italic;
+}
+
+.hero-subtitle {
+  font-size: 0.95rem;
+  line-height: 1.45;
+  color: #4b5563;
+  margin-bottom: 24px;
+  max-width: 440px;
+  transform: translateY(-20px);
+}
+
+/* Right Visual Area Container */
+.hero-visual-container {
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  height: 480px;
+}
+
+/* Mockup Wrapper */
+.mockup-wrapper {
+  position: relative;
+  width: 560px;
+  height: 450px;
+}
+
+/* Mockup Image Entry Animation */
+@keyframes mockupFadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.mockup-img {
+  position: absolute;
+  bottom: 0;
+  right: 25px;
+  width: 365px;
+  height: auto;
+  display: block;
+  filter: drop-shadow(0 15px 30px rgba(27, 54, 93, 0.12));
+  z-index: 2;
+  animation: mockupFadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* SVG Arc Overlay & Line Drawing Animation */
+.curve-svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+@keyframes drawLine {
+  0% {
+    stroke-dashoffset: 1200;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+.animated-path {
+  stroke-dasharray: 8 8; /* Creates the dotted styling pattern */
+  animation: drawLine 1.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* Node Dots Scale-In Animation */
+@keyframes dotPopIn {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  70% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.node-dot {
+  transform-origin: center;
+  opacity: 0;
+  animation: dotPopIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+.node-dot:nth-child(2) { animation-delay: 0.8s; }
+.node-dot:nth-child(3) { animation-delay: 1.0s; }
+.node-dot:nth-child(4) { animation-delay: 1.2s; }
+.node-dot:nth-child(5) { animation-delay: 1.4s; }
+.node-dot:nth-child(6) { animation-delay: 1.6s; }
+
+/* Glass Frosted Feature Pills with Float Animation & Smooth Fade-In */
+@keyframes pillFloatAndFade {
+  0% {
+    opacity: 0;
+    transform: translateY(15px) scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes gentleFloating {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-5px) rotate(0.8deg);
+  }
+}
+
+.glass-pill {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 0.73rem;
+  font-weight: 600;
+  color: var(--text-dark);
+  box-shadow: 0 8px 24px rgba(43, 122, 158, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.95);
+  white-space: nowrap;
+  z-index: 3;
+  opacity: 0;
+  animation: pillFloatAndFade 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards, 
+             gentleFloating 4s ease-in-out infinite 0.6s;
+}
+
+.glass-pill:nth-child(2) { animation-delay: 0.8s, 0.8s; }
+.glass-pill:nth-child(3) { animation-delay: 1.0s, 1.0s; }
+.glass-pill:nth-child(4) { animation-delay: 1.2s, 1.2s; }
+.glass-pill:nth-child(5) { animation-delay: 1.4s, 1.4s; }
+.glass-pill:nth-child(6) { animation-delay: 1.6s, 1.6s; }

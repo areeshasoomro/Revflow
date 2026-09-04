@@ -162,7 +162,7 @@ input:checked + .slider {
 
 input:checked + .slider:before {
   transform: translateX(24px);
-  content: "👍";
+  content: "👍🏻";
   font-size: 12px;
   display: flex;
   align-items: center;

@@ -120,12 +120,12 @@
   font-weight: 700;
 }
 
-/* Toggle Switch Styles */
+/* Toggle Switch Styles with Natural Yellow Animated Thumbs Emoji */
 .switch {
   position: relative;
   display: inline-block;
-  width: 42px;
-  height: 22px;
+  width: 52px;
+  height: 28px;
 }
 
 .switch input {
@@ -139,20 +139,21 @@
   cursor: pointer;
   top: 0; left: 0; right: 0; bottom: 0;
   background-color: #cbd5e1;
-  transition: .3s;
-  border-radius: 22px;
+  transition: .3s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 28px;
 }
 
 .slider:before {
   position: absolute;
   content: "";
-  height: 16px;
-  width: 16px;
+  height: 22px;
+  width: 22px;
   left: 3px;
   bottom: 3px;
   background-color: white;
-  transition: .3s;
+  transition: .3s cubic-bezier(0.4, 0, 0.2, 1);
   border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
 }
 
 input:checked + .slider {
@@ -160,7 +161,19 @@ input:checked + .slider {
 }
 
 input:checked + .slider:before {
-  transform: translateX(20px);
+  transform: translateX(24px);
+  content: "👍";
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: thumbsBounce 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+@keyframes thumbsBounce {
+  0% { transform: translateX(24px) scale(0.6) rotate(-20deg); }
+  50% { transform: translateX(24px) scale(1.25) rotate(10deg); }
+  100% { transform: translateX(24px) scale(1) rotate(0deg); }
 }
 
 /* Addons Accordion inside controls */
@@ -176,17 +189,55 @@ input:checked + .slider:before {
 .addon-checkbox-label {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   font-size: 0.82rem;
   font-weight: 500;
   color: var(--primary-navy);
   cursor: pointer;
+  position: relative;
+  user-select: none;
 }
 
+/* Custom Checkbox matching reference image style */
 .addon-checkbox-label input {
-  accent-color: var(--secondary-blue);
-  width: 15px;
-  height: 15px;
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.custom-checkbox {
+  height: 24px;
+  width: 24px;
+  background-color: #e5edf3;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.addon-checkbox-label:hover .custom-checkbox {
+  background-color: #dbe7f1;
+}
+
+.addon-checkbox-label input:checked ~ .custom-checkbox {
+  background-color: #e5edf3;
+}
+
+.check-icon {
+  width: 14px;
+  height: 14px;
+  color: var(--secondary-blue);
+  stroke: var(--secondary-blue);
+  stroke-width: 3.5;
+  display: none;
+}
+
+.addon-checkbox-label input:checked ~ .custom-checkbox .check-icon {
+  display: block;
 }
 
 /* Right Preview Canvas */

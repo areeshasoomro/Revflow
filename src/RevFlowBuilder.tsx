@@ -69,13 +69,14 @@ const AVAILABLE_MODULES: ModuleConfig[] = [
 ];
 
 export const RevFlowBuilder: React.FC = () => {
-  const [activeModules, setActiveModules] = useState<string[]>(['inventory', 'sales']);
-  const [expandedModule, setExpandedModule] = useState<string | null>('inventory');
+  // Started empty so no toggles are on initially
+  const [activeModules, setActiveModules] = useState<string[]>([]);
+  const [expandedModule, setExpandedModule] = useState<string | null>(null);
   
   const [activeAddons, setActiveAddons] = useState<Record<string, boolean>>({
-    inv_shopify: true,
-    inv_whatsapp: true,
-    sales_pos: true,
+    inv_shopify: false,
+    inv_whatsapp: false,
+    sales_pos: false,
     sales_online: false,
     acc_tax: false,
     acc_invoice: false,
@@ -123,7 +124,6 @@ export const RevFlowBuilder: React.FC = () => {
       <div className="builder-workspace">
         {/* Left Control Panel */}
         <div className="control-panel">
-          {/* Updated heading: Smaller size, semibold (600), and custom line-height spacing */}
           <h3 
             className="panel-heading" 
             style={{ 
@@ -179,7 +179,11 @@ export const RevFlowBuilder: React.FC = () => {
                             checked={!!activeAddons[addon.id]} 
                             onChange={() => toggleAddon(addon.id)} 
                           />
-                          <span className="custom-checkbox"></span>
+                          <span className="custom-checkbox">
+                            <svg className="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
+                              <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                          </span>
                           <span style={{ fontFamily: "'Inter', sans-serif" }}>{addon.name}</span>
                         </label>
                       ))}
@@ -199,7 +203,7 @@ export const RevFlowBuilder: React.FC = () => {
 
           <div className="canvas-tree-container" style={{ overflowY: 'visible', padding: '40px 20px', display: 'flex', justifyContent: 'center' }}>
             {activeModules.length === 0 ? (
-              <div className="empty-preview-state">
+              <div className="empty-preview-state" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', minHeight: '300px', textAlign: 'center', color: '#64748b' }}>
                 <p style={{ fontFamily: "'Inter', sans-serif" }}>Toggle modules on the left to build your workflow tree.</p>
               </div>
             ) : (

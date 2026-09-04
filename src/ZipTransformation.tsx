@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { motion, useMotionValue, useTransform, useScroll } from 'framer-motion';
+import { motion, useTransform, useScroll } from 'framer-motion';
 import styles from './ZipTransformation.module.css';
 
 export default function ZipTransformation() {
@@ -14,9 +14,6 @@ export default function ZipTransformation() {
   
   // Map scroll progress so the zip opens automatically as user scrolls into the section, and pauses/stops wherever scroll stops
   const scrollY = useTransform(scrollYProgress, [0.15, 0.55], [0, 400]);
-
-  // Combined with manual dragging capability if user actively grabs the handle
-  const dragY = useMotionValue(0);
 
   // Link left/right panel separation to the scroll/drag motion values
   const leftX = useTransform(scrollY, [0, 400], ['0%', '-100%']);

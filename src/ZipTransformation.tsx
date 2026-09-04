@@ -1,29 +1,30 @@
-
-import { useRef, useState } from 'react';
-import { motion, useMotionValue, useTransform, animate } from 'framer-motion';
+import { useRef } from 'react';
+import { motion, useMotionValue, useTransform, useScroll } from 'framer-motion';
 import styles from './ZipTransformation.module.css';
 
 export default function ZipTransformation() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [isOpen, setIsOpen] = useState(false);
+  const sectionRef = useRef<HTMLElement>(null);
   
-  // Track vertical dragging from 0px (closed) to 400px (adjusted for smaller screen height)
-  const yDrag = useMotionValue(0);
+  // Track vertical movement linked to scroll progress of this specific section
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"]
+  });
+  
+  // Map scroll progress so the zip opens automatically as user scrolls into the section, and pauses/stops wherever scroll stops
+  const scrollY = useTransform(scrollYProgress, [0.15, 0.55], [0, 400]);
 
-  // As you drag down, left half slides left, right half slides right
-  const leftX = useTransform(yDrag, [0, 400], ['0%', '-100%']);
-  const rightX = useTransform(yDrag, [0, 400], ['0%', '100%']);
+  // Combined with manual dragging capability if user actively grabs the handle
+  const dragY = useMotionValue(0);
 
-  // Click handler to toggle open/close automatically if they prefer tapping the zipper
-  const handleToggleZip = () => {
-    const targetY = isOpen ? 0 : 400;
-    animate(yDrag, targetY, { type: 'spring', stiffness: 300, damping: 30 });
-    setIsOpen(!isOpen);
-  };
+  // Link left/right panel separation to the scroll/drag motion values
+  const leftX = useTransform(scrollY, [0, 400], ['0%', '-100%']);
+  const rightX = useTransform(scrollY, [0, 400], ['0%', '100%']);
 
   return (
-    <section className={styles.transformationSection}>
-      {/* Section Header with balanced vertical spacing */}
+    <section className={styles.transformationSection} ref={sectionRef}>
+      {/* Section Header */}
       <div className={styles.headerContainer}>
         <h2 className={styles.headline}>
           <span className={styles.darkText}>The </span>
@@ -33,11 +34,11 @@ export default function ZipTransformation() {
           <span className={styles.accentText}>RevFlow Way.</span>
         </h2>
         <p className={styles.subtext}>
-          Compare the daily friction of legacy workarounds with the seamless, automated control of RevFlow.
+          Scroll down to watch the zip automatically open, or grab and drag the handle manually to any position.
         </p>
       </div>
 
-      {/* Laptop Container - Reduced max-width for a more compact size */}
+      {/* Laptop Container */}
       <div className={styles.laptopFrame}>
         <div className={styles.screenContent} ref={containerRef}>
           
@@ -102,23 +103,13 @@ export default function ZipTransformation() {
           {/* CENTER METAL ZIPPER TRACK */}
           <div className={styles.centerZipTrack} />
 
-          {/* INTERACTIVE DRAGGABLE & CLICKABLE ZIPPER SLIDER HANDLE */}
+          {/* INTERACTIVE ZIPPER SLIDER HANDLE (Moves via scroll or manual drag) */}
           <motion.div 
             className={styles.zipperSliderHandle}
             drag="y"
             dragConstraints={{ top: 0, bottom: 400 }}
             dragElastic={0.02}
-            style={{ y: yDrag }}
-            onClick={handleToggleZip}
-            onDragEnd={() => {
-              if (yDrag.get() > 200) {
-                animate(yDrag, 400, { type: 'spring', stiffness: 300, damping: 30 });
-                setIsOpen(true);
-              } else {
-                animate(yDrag, 0, { type: 'spring', stiffness: 300, damping: 30 });
-                setIsOpen(false);
-              }
-            }}
+            style={{ y: scrollY }}
           >
             <div className={styles.zipperPullTab} />
           </motion.div>

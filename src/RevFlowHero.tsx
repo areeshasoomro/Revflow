@@ -140,6 +140,7 @@
 
 import React from 'react';
 import './RevFlowHero.css';
+import { Link } from 'react-router-dom';
 
 interface FeatureItem {
   id: string;
@@ -199,7 +200,7 @@ export const RevFlowHero: React.FC = () => {
           </div>
           <div className="nav-links">
             <a href="#home" className="nav-link active">Home</a>
-            <a href="#features" className="nav-link">Features</a>
+            <Link to="/features" className="nav-link">Features</Link>
             <a href="#solutions" className="nav-link">Solutions</a>
             <a href="#pricing" className="nav-link">Pricing</a>
             <a href="#compliance" className="nav-link">FBR Compliance Hub</a>

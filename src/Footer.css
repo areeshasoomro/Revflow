@@ -1,0 +1,326 @@
+/* src/Footer.css */
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+  --primary-navy: #1b365d;
+  --secondary-blue: #2b7a9e;
+  --white: #ffffff;
+  --text-dark: #1e293b;
+}
+
+.footer-section-wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 100px;
+  font-family: 'Inter', sans-serif;
+}
+
+.footer-cta-container {
+  text-align: center;
+  padding: 0 20px 80px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.footer-cta-title {
+  font-family: 'Caveat', cursive;
+  font-size: 3.8rem;
+  font-weight: 700;
+  color: var(--primary-navy);
+  line-height: 1.15;
+  margin-bottom: 20px;
+}
+
+.footer-cta-title .highlight-text {
+  color: var(--secondary-blue);
+}
+
+.footer-cta-subtitle {
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: #4b5563;
+  margin-bottom: 40px;
+}
+
+/* Email Input Pill Bar */
+.footer-email-pill {
+  background: var(--white);
+  border-radius: 40px;
+  padding: 6px 6px 6px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 600px;
+  width: 100%;
+  box-shadow: 0 12px 35px rgba(27, 54, 93, 0.08);
+  border: 1px solid #d9e6f0;
+}
+
+.email-input-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex: 1;
+}
+
+.email-icon {
+  font-size: 1.2rem;
+  color: #94a3b8;
+}
+
+.footer-email-input {
+  border: none;
+  outline: none;
+  font-size: 1rem;
+  color: var(--text-dark);
+  width: 100%;
+  font-family: 'Inter', sans-serif;
+}
+
+.footer-email-input::placeholder {
+  color: #94a3b8;
+}
+
+.footer-get-started-btn {
+  background-color: var(--primary-navy);
+  color: var(--white);
+  border: none;
+  border-radius: 30px;
+  padding: 12px 28px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+  white-space: nowrap;
+}
+
+.footer-get-started-btn:hover {
+  background-color: #244675;
+  transform: translateY(-1px);
+}
+
+.footer-btn-arrow {
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+/* --- Dark Navy Footer Box --- */
+.footer-dark-navy-box {
+  width: 100%;
+  background-color: #12223b;
+  border-top-left-radius: 48px;
+  border-top-right-radius: 48px;
+  /* Increased bottom padding to give space below the social icons */
+  padding: 80px 50px 100px 50px;
+  position: relative;
+  overflow: hidden;
+  color: #94a3b8;
+  box-sizing: border-box;
+}
+
+.footer-content-inner {
+  max-width: 1250px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.6fr 1fr 1fr 1fr;
+  gap: 30px;
+  position: relative;
+  z-index: 2;
+  align-items: start;
+}
+
+/* --- Column 1 Left Alignment & Styling --- */
+.footer-brand-col {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  padding-right: 20px;
+}
+
+.footer-brand-logo {
+  height: 38px;
+  width: auto;
+  margin-bottom: 20px;
+  filter: brightness(0) invert(1);
+}
+
+.footer-brand-desc {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: #cbd5e1;
+  margin-bottom: 24px;
+  max-width: 320px;
+}
+
+.footer-contact-info {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 28px;
+  align-items: flex-start;
+}
+
+.footer-contact-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #cbd5e1;
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: color 0.2s ease;
+}
+
+.footer-contact-item .contact-icon {
+  color: #ffffff !important;
+  font-size: 1rem;
+  opacity: 0.9;
+}
+
+.footer-contact-item:hover {
+  color: var(--white);
+}
+
+.footer-social-icons {
+  display: flex;
+  gap: 12px;
+}
+
+.social-icon-btn {
+  width: 36px;
+  height: 36px;
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--white);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: background 0.2s ease;
+}
+
+.social-icon-btn:hover {
+  background: var(--secondary-blue);
+}
+
+/* Link Columns */
+.footer-links-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.footer-col-title {
+  color: var(--white);
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 20px;
+  letter-spacing: 0.3px;
+}
+
+.footer-links-col ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.footer-links-col ul li a {
+  color: #94a3b8;
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: color 0.2s ease;
+  white-space: nowrap;
+}
+
+.footer-links-col ul li a:hover {
+  color: var(--white);
+}
+
+/* --- Background Watermark Text Fix --- */
+.footer-watermark {
+  position: absolute;
+  /* Pushed it down safely so it doesn't overlap the social icons */
+  bottom: -15px; 
+  left: 50%;
+  transform: translateX(-50%);
+  /* Slightly scaled down font-size to fit nicely without cutting off or overlapping */
+  font-size: 12.5vw; 
+  font-weight: 900;
+  color: rgba(255, 252, 252, 0.338);
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 1;
+  font-family: 'Inter', sans-serif;
+  letter-spacing: -2px;
+}
+
+/* Floating WhatsApp Button */
+.floating-whatsapp-btn {
+  position: absolute;
+  right: 40px;
+  bottom: 40px;
+  width: 56px;
+  height: 56px;
+  background-color: #25d366;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 24px rgba(37, 211, 102, 0.35);
+  z-index: 10;
+  transition: transform 0.2s ease;
+  text-decoration: none;
+}
+
+.floating-whatsapp-btn:hover {
+  transform: scale(1.08);
+}
+
+.whatsapp-icon-symbol {
+  font-size: 1.8rem;
+  color: var(--white);
+  line-height: 1;
+}
+
+/* Responsive queries */
+@media (max-width: 1024px) {
+  .footer-content-inner {
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+  }
+}
+
+@media (max-width: 768px) {
+  .footer-cta-title {
+    font-size: 2.8rem;
+  }
+  .footer-content-inner {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  .footer-dark-navy-box {
+    padding: 60px 24px 60px 24px;
+  }
+  .footer-links-col ul li a {
+    white-space: normal;
+  }
+  .floating-whatsapp-btn {
+    right: 20px;
+    bottom: 20px;
+  }
+  .footer-watermark {
+    font-size: 15vw;
+  }
+}

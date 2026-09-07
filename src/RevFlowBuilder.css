@@ -11,12 +11,13 @@
 
 .revflow-builder-section {
   width: 100%;
-  max-width: 1350px;
+  max-width: 1450px; /* Expanded from 1350px */
   margin: 0 auto;
-  padding: 60px 20px;
+  padding: 60px 4vw; /* Responsive side padding */
   background-color: var(--bg-color);
   font-family: 'Inter', sans-serif;
   color: var(--primary-navy);
+  box-sizing: border-box;
 }
 
 .builder-header-wrapper {

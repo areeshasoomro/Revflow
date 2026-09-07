@@ -127,14 +127,17 @@
 }
 
 .footer-content-inner {
-  max-width: 1250px;
+  max-width: 1450px; /* Expanded max width */
+  width: 100%;
   margin: 0 auto;
+  padding: 0 4vw; /* Fluid container padding */
   display: grid;
   grid-template-columns: 1.6fr 1fr 1fr 1fr;
   gap: 30px;
   position: relative;
   z-index: 2;
   align-items: start;
+  box-sizing: border-box;
 }
 
 /* --- Column 1 Left Alignment & Styling --- */
@@ -258,7 +261,7 @@
   /* Slightly scaled down font-size to fit nicely without cutting off or overlapping */
   font-size: 12.5vw; 
   font-weight: 900;
-  color: rgba(255, 252, 252, 0.338);
+  color: rgba(236, 224, 224, 0.064);
   white-space: nowrap;
   pointer-events: none;
   z-index: 1;

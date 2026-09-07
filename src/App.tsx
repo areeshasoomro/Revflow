@@ -5,6 +5,7 @@ import RevFlowBuilder from "./RevFlowBuilder";
 import { RevFlowHero } from "./RevFlowHero";
 import ZipTransformation from "./ZipTransformation";
 import FeaturesPage from "./FeaturesPage";
+import Footer from "./Footer";
 
 // Landing Page Wrapper Component containing all your main sections
 function HomePage() {
@@ -14,6 +15,7 @@ function HomePage() {
       <RevFlowBuilder />  
       <AgilityTransformation /> 
       <ZipTransformation /> 
+      <Footer />
     </div>
   );
 }

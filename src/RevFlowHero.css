@@ -309,3 +309,40 @@ body, html {
 .glass-pill:nth-child(4) { animation-delay: 1.2s, 1.2s; }
 .glass-pill:nth-child(5) { animation-delay: 1.4s, 1.4s; }
 .glass-pill:nth-child(6) { animation-delay: 1.6s, 1.6s; }
+
+
+
+/* Add these styles to your existing RevFlowHero.css navbar section */
+
+.nav-link {
+  text-decoration: none;
+  color: #475569;
+  font-size: 0.88rem;
+  font-weight: 500;
+  position: relative;
+  padding-bottom: 4px;
+  transition: color 0.2s ease;
+}
+
+/* Blue underline indicator animation on hover or when active */
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0%;
+  height: 2.5px;
+  background-color: var(--secondary-blue);
+  border-radius: 2px;
+  transition: width 0.25s ease-in-out;
+}
+
+.nav-link:hover::after, 
+.nav-link.active::after {
+  width: 100%;
+}
+
+.nav-link:hover, .nav-link.active {
+  color: var(--primary-navy);
+  font-weight: 600;
+}

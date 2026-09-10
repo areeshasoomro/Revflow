@@ -1,0 +1,191 @@
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+  --primary-navy: #1b365d;
+  --secondary-teal: #2E86AB;
+  --bg-color: #EDF2F7;
+  --white: #ffffff;
+  --border-color: #e2e8f0;
+}
+
+.trusted-section {
+  width: 100%;
+  padding: 50px 20px 70px 20px;
+  background-color: var(--bg-color);
+  font-family: 'Inter', sans-serif;
+  color: var(--primary-navy);
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.trusted-wrapper {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Header */
+.trusted-header {
+  text-align: center;
+  margin-bottom: 40px;
+  width: 100%;
+}
+
+.trusted-title {
+  font-family: 'Caveat', cursive;
+  font-size: 3.2rem;
+  font-weight: 700;
+  color: var(--primary-navy);
+  line-height: 1.15;
+  margin-bottom: 12px;
+}
+
+.script-highlight {
+  color: var(--secondary-teal);
+  font-style: italic;
+}
+
+.trusted-subtitle {
+  font-size: 0.98rem;
+  color: #4b5563;
+  line-height: 1.5;
+  max-width: 540px;
+  margin: 0 auto;
+}
+
+/* Seamless Logo Marquee Container */
+.logos-marquee-container {
+  width: 100%;
+  max-width: 1100px;
+  overflow: hidden;
+  position: relative;
+  margin-bottom: 45px;
+  mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+}
+
+.logos-track {
+  display: flex;
+  width: max-content;
+  animation: scrollBannerMarquee 15s linear infinite;
+}
+
+.marquee-banner-img {
+  height: 44px;
+  width: auto;
+  object-fit: contain;
+  display: block;
+  flex-shrink: 0;
+  margin-right: 40px; /* Space between repeated image blocks */
+}
+
+@keyframes scrollBannerMarquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* Cards Marquee Viewport */
+.cards-marquee-viewport {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  mask-image: linear-gradient(to right, transparent, black 4%, black 96%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 4%, black 96%, transparent);
+  padding: 30px 0;
+}
+
+.cards-marquee-track {
+  display: flex;
+  gap: 28px;
+  width: max-content;
+  animation: scrollCardsMarquee 35s linear infinite;
+}
+
+/* Exact Figma Curved Card Shape & Staggered Rising Animation */
+.testimonial-card {
+  width: 290px;
+  background: var(--white);
+  border: 1px solid var(--border-color);
+  border-radius: 255px 25px 235px 25px / 25px 245px 25px 255px;
+  padding: 40px 26px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  box-shadow: 0 12px 35px rgba(27, 54, 93, 0.06);
+  animation: riseAndPulse 4s ease-in-out infinite;
+}
+
+.cards-marquee-track .testimonial-card:nth-child(4n + 1) { animation-delay: 0s; }
+.cards-marquee-track .testimonial-card:nth-child(4n + 2) { animation-delay: 1s; }
+.cards-marquee-track .testimonial-card:nth-child(4n + 3) { animation-delay: 2s; }
+.cards-marquee-track .testimonial-card:nth-child(4n + 4) { animation-delay: 3s; }
+
+@keyframes scrollCardsMarquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes riseAndPulse {
+  0%, 100% {
+    transform: translateY(0px) scale(0.94);
+    opacity: 0.7;
+    box-shadow: 0 8px 20px rgba(27, 54, 93, 0.04);
+  }
+  50% {
+    transform: translateY(-16px) scale(1.03);
+    opacity: 1;
+    border-color: rgba(46, 134, 171, 0.35);
+    box-shadow: 0 22px 45px rgba(27, 54, 93, 0.12);
+  }
+}
+
+/* Avatar & Details */
+.avatar-wrapper {
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-bottom: 12px;
+  border: 2px solid var(--secondary-teal);
+}
+
+.reviewer-avatar {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.reviewer-name {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--primary-navy);
+  margin: 0 0 2px 0;
+}
+
+.reviewer-role {
+  font-size: 0.78rem;
+  color: #64748b;
+  margin-bottom: 16px;
+}
+
+.reviewer-company {
+  color: var(--secondary-teal);
+  font-weight: 600;
+}
+
+.reviewer-text {
+  font-size: 0.88rem;
+  color: #4b5563;
+  line-height: 1.6;
+  margin: 0 0 24px 0;
+}
+
+.stars-row {
+  display: flex;
+  gap: 4px;
+  margin-top: auto;
+}

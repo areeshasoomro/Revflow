@@ -1,0 +1,179 @@
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+  --primary-navy: #1b365d;
+  --secondary-teal: #2E86AB;
+  --bg-color: #EDF2F7;
+  --white: #ffffff;
+  --border-color: #e2e8f0;
+}
+
+.self-serve-section {
+  width: 100%;
+  padding: 40px 20px; /* Reduced vertical padding from 80px to 40px */
+  background-color: var(--bg-color);
+  font-family: 'Inter', sans-serif;
+  color: var(--primary-navy);
+  box-sizing: border-box;
+}
+
+.self-serve-wrapper {
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Header Text */
+.self-serve-header {
+  text-align: center;
+  margin-bottom: 35px; /* Reduced bottom margin */
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.self-serve-title {
+  font-family: 'Caveat', cursive;
+  font-size: 3.1rem;
+  font-weight: 700;
+  color: var(--primary-navy);
+  line-height: 1.15;
+  margin-bottom: 12px; /* Reduced margin */
+  white-space: nowrap;
+}
+
+.script-highlight {
+  color: var(--secondary-teal);
+  font-style: italic;
+}
+
+.self-serve-subtitle {
+  font-size: 0.98rem;
+  color: #4b5563;
+  line-height: 1.5;
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+/* Cards Stack Viewport */
+.cards-stack-viewport {
+  position: relative;
+  width: 100%;
+  max-width: 620px;
+  height: 380px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 15px; /* Reduced margin */
+}
+
+/* Individual Card */
+.step-card-item {
+  position: absolute;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  border-radius: 20px;
+  padding: 22px 32px;
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  box-shadow: 0 4px 15px rgba(27, 54, 93, 0.03);
+  cursor: pointer;
+  user-select: none;
+  box-sizing: border-box;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Active Highlighted Card */
+.step-card-item.active {
+  background-color: var(--white);
+  border-color: rgba(46, 134, 171, 0.25);
+  box-shadow: 0 16px 36px rgba(27, 54, 93, 0.1);
+}
+
+/* Icon Box */
+.step-icon-box {
+  width: 56px;
+  height: 56px;
+  min-width: 56px;
+  background-color: #bcd5e6;
+  color: #ffffff;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease;
+}
+
+.step-icon-box.active {
+  background-color: #2E86AB;
+}
+
+/* Content */
+.step-content-box {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+  text-align: left;
+}
+
+.step-card-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--primary-navy);
+  margin: 0;
+}
+
+.step-card-desc {
+  font-size: 0.88rem;
+  color: #64748b;
+  margin: 0;
+}
+
+/* Step Number Badge */
+.step-badge {
+  background-color: #e2e8f0;
+  color: #94a3b8;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 6px 14px;
+  border-radius: 20px;
+  letter-spacing: 0.03em;
+  transition: all 0.3s ease;
+}
+
+.step-badge.active {
+  background-color: #e1f0f7;
+  color: #2E86AB;
+}
+
+/* Dots Navigation */
+.carousel-dots-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-top: 5px;
+}
+
+.dot-indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #cbd5e1;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: all 0.3s ease;
+}
+
+.dot-indicator.active {
+  width: 24px;
+  border-radius: 4px;
+  background-color: #2E86AB;
+}

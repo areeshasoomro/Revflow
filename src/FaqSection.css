@@ -1,0 +1,146 @@
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+  --primary-navy: #1b365d;
+  --secondary-teal: #2E86AB;
+  --bg-color: #EDF2F7;
+  --white: #ffffff;
+  --border-color: #e2e8f0;
+}
+
+.faq-section {
+  width: 100%;
+  padding: 50px 20px;
+  background-color: var(--bg-color);
+  font-family: 'Inter', sans-serif;
+  color: var(--primary-navy);
+  box-sizing: border-box;
+}
+
+.faq-wrapper {
+  max-width: 760px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Header Text */
+.faq-header {
+  text-align: center;
+  margin-bottom: 40px;
+  width: 100%;
+}
+
+.faq-title {
+  font-family: 'Caveat', cursive;
+  font-size: 3.2rem;
+  font-weight: 700;
+  color: var(--primary-navy);
+  line-height: 1.15;
+  margin-bottom: 12px;
+}
+
+.script-highlight {
+  color: var(--secondary-teal);
+  font-style: italic;
+}
+
+.faq-subtitle {
+  font-size: 0.98rem;
+  color: #4b5563;
+  line-height: 1.5;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+/* FAQ List Container */
+.faq-list {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Individual Accordion Card */
+.faq-card {
+  background-color: var(--white);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  overflow: hidden;
+  transition: background-color 0.3s ease;
+}
+
+.faq-card.open {
+  background-color: var(--white);
+}
+
+/* Question Row Button */
+.faq-question-row {
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 22px 26px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  text-align: left;
+  box-sizing: border-box;
+}
+
+.faq-question-text {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--primary-navy);
+}
+
+/* Action Button Icon - Increased size to 44x44px */
+.faq-icon-btn {
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  background-color: #f1f5f9;
+  color: var(--primary-navy);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.faq-card.open .faq-icon-btn {
+  background-color: var(--primary-navy);
+  color: var(--white);
+}
+
+/* Answer Container */
+.faq-answer-container {
+  overflow: hidden;
+}
+
+.faq-answer-inner {
+  padding: 0 26px 24px 26px;
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  text-align: left; /* Explicitly forced left-aligned */
+}
+
+/* Vertical Accent Bar matching Figma design */
+.faq-answer-accent-bar {
+  width: 4px;
+  min-width: 4px;
+  height: 44px;
+  background-color: var(--secondary-teal);
+  border-radius: 4px;
+  margin-top: 2px;
+}
+
+.faq-answer-text {
+  font-size: 0.92rem;
+  color: #64748b;
+  line-height: 1.6;
+  margin: 0;
+  text-align: left; /* Ensures text aligns left inside the open box */
+}

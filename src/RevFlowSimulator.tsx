@@ -18,6 +18,16 @@ interface CoreModuleOption {
 
 const AVAILABLE_CORE_MODULES: CoreModuleOption[] = [
   {
+    id: 'sales',
+    name: 'Sales',
+    description: 'Track orders, invoices, and customer receipts.',
+    basePrice: 10000,
+    addOns: [
+      { id: 'online_store', name: 'Online Storefront', price: 8000 },
+      { id: 'pos_receipts', name: 'Custom POS Receipts', price: 3000 },
+    ],
+  },
+  {
     id: 'inventory',
     name: 'Inventory Management',
     description: 'Manage your stock, products and inventory seamlessly.',
@@ -28,8 +38,28 @@ const AVAILABLE_CORE_MODULES: CoreModuleOption[] = [
     ],
   },
   {
+    id: 'accounting',
+    name: 'Accounting',
+    description: 'Automate P&L, ledger statements, and tax compliance.',
+    basePrice: 14000,
+    addOns: [
+      { id: 'tax_hub', name: 'Advanced Tax Hub', price: 6000 },
+      { id: 'multi_curr', name: 'Multi-Currency Support', price: 4000 },
+    ],
+  },
+  {
+    id: 'multi_branch',
+    name: 'Multi Branch',
+    description: 'Sync inventory and sales across multiple business locations.',
+    basePrice: 16000,
+    addOns: [
+      { id: 'branch_transfer', name: 'Inter-Branch Stock Transfer', price: 7000 },
+      { id: 'central_audit', name: 'Centralized Audit Logs', price: 5000 },
+    ],
+  },
+  {
     id: 'hr',
-    name: 'HR Management',
+    name: 'HR',
     description: 'Manage employees, attendance and payroll in one place.',
     basePrice: 9600,
     addOns: [
@@ -38,38 +68,25 @@ const AVAILABLE_CORE_MODULES: CoreModuleOption[] = [
     ],
   },
   {
-    id: 'sales',
-    name: 'Sales & POS',
-    description: 'Track orders, invoices, and customer receipts.',
-    basePrice: 11000,
+    id: 'purchase',
+    name: 'Purchase',
+    description: 'Streamline vendor bills, purchase orders and re-ordering.',
+    basePrice: 9000,
     addOns: [
-      { id: 'crm', name: 'CRM Integration', price: 4500 },
-      { id: 'online_store', name: 'Online Storefront', price: 8000 },
-    ],
-  },
-  {
-    id: 'accounting',
-    name: 'Accounting & Finance',
-    description: 'Automate P&L, ledger statements, and tax compliance.',
-    basePrice: 14000,
-    addOns: [
-      { id: 'tax_hub', name: 'Advanced Tax Hub', price: 6000 },
-      { id: 'multi_curr', name: 'Multi-Currency Support', price: 4000 },
+      { id: 'vendor_portal', name: 'Vendor Portal Access', price: 4000 },
+      { id: 'auto_reorder', name: 'Automated Re-ordering', price: 4500 },
     ],
   },
 ];
 
 export const RevFlowSimulator: React.FC = () => {
-  // Selected core modules configuration: map moduleId -> selected addOnIds[]
-  const [selectedModules, setSelectedModules] = useState<Record<string, string[]>>({
-    inventory: ['shopify'], // Default active state based on your screenshot
-  });
+  // Default: No modules selected initially
+  const [selectedModules, setSelectedModules] = useState<Record<string, string[]>>({});
 
   const [dropdownValue, setDropdownValue] = useState<string>('');
   const [seats, setSeats] = useState<number>(4);
-  const costPerSeat = 750; // 4 seats * 750 = 3,000 PKR
+  const costPerSeat = 750;
 
-  // Toggle add-on checkbox inside a module
   const toggleAddOn = (moduleId: string, addOnId: string) => {
     setSelectedModules((prev) => {
       const currentAddOns = prev[moduleId] || [];
@@ -80,7 +97,6 @@ export const RevFlowSimulator: React.FC = () => {
     });
   };
 
-  // Remove a core module
   const removeModule = (moduleId: string) => {
     setSelectedModules((prev) => {
       const copy = { ...prev };
@@ -89,7 +105,6 @@ export const RevFlowSimulator: React.FC = () => {
     });
   };
 
-  // Add a new core module from dropdown
   const handleAddModuleDropdown = () => {
     if (dropdownValue && !selectedModules[dropdownValue]) {
       setSelectedModules((prev) => ({ ...prev, [dropdownValue]: [] }));
@@ -97,16 +112,13 @@ export const RevFlowSimulator: React.FC = () => {
     }
   };
 
-  // Calculations
   const activeModuleKeys = Object.keys(selectedModules);
 
-  // Total Core Modules Price
   const totalCorePrice = activeModuleKeys.reduce((sum, modId) => {
     const mod = AVAILABLE_CORE_MODULES.find((m) => m.id === modId);
     return sum + (mod ? mod.basePrice : 0);
   }, 0);
 
-  // Total Add-ons list & price
   const activeAddOnsList: { id: string; name: string; price: number }[] = [];
   activeModuleKeys.forEach((modId) => {
     const mod = AVAILABLE_CORE_MODULES.find((m) => m.id === modId);
@@ -124,7 +136,6 @@ export const RevFlowSimulator: React.FC = () => {
   const totalSeatsPrice = seats * costPerSeat;
   const grandTotal = totalCorePrice + totalAddOnsPrice + totalSeatsPrice;
 
-  // Unselected modules available for adding
   const availableDropdownOptions = AVAILABLE_CORE_MODULES.filter(
     (m) => !selectedModules[m.id]
   );
@@ -133,7 +144,7 @@ export const RevFlowSimulator: React.FC = () => {
     <section className="revflow-simulator-section">
       <div className="simulator-wrapper">
         
-        {/* Header Title */}
+        {/* Header Section */}
         <div className="simulator-header">
           <h1 className="simulator-title">
             Build <span className="highlight-script">Your Plan</span>. See <span className="highlight-script">Your Pricing</span> <br />
@@ -144,47 +155,59 @@ export const RevFlowSimulator: React.FC = () => {
           </p>
         </div>
 
-        {/* Main Grid Workspace */}
+        {/* Main Grid */}
         <div className="simulator-grid">
           
-          {/* Left Column: Interactive Controls */}
+          {/* Left Column */}
           <div className="simulator-controls-col">
             
-            {/* Step 1: Select Core Module */}
+            {/* Step 1 */}
             <div className="control-step-block">
               <div className="step-label-row">
                 <span className="step-number-badge">1</span>
                 <h3 className="step-heading">Select Core Module</h3>
               </div>
 
-              {/* Add Module Dropdown Selector */}
-              {availableDropdownOptions.length > 0 && (
-                <div className="add-module-dropdown-wrapper">
-                  <select
-                    className="core-module-select"
-                    value={dropdownValue}
-                    onChange={(e) => setDropdownValue(e.target.value)}
-                  >
-                    <option value="" disabled>
-                      Select a module to add...
+              <div className="core-select-container">
+                <select
+                  className="core-module-select"
+                  value={dropdownValue}
+                  onChange={(e) => setDropdownValue(e.target.value)}
+                >
+                  <option value="" disabled>
+                    Select a core module...
+                  </option>
+                  {availableDropdownOptions.map((mod) => (
+                    <option key={mod.id} value={mod.id}>
+                      {mod.name}
                     </option>
-                    {availableDropdownOptions.map((mod) => (
-                      <option key={mod.id} value={mod.id}>
-                        {mod.name}
-                      </option>
-                    ))}
-                  </select>
-                  <button
-                    className="add-module-action-btn"
-                    onClick={handleAddModuleDropdown}
-                    disabled={!dropdownValue}
-                  >
-                    <span>+ Add Module</span>
-                  </button>
+                  ))}
+                </select>
+                <span className="select-arrow-icon">▼</span>
+              </div>
+
+              {/* Removable chips for active modules */}
+              {activeModuleKeys.length > 0 && (
+                <div className="selected-module-chips-row">
+                  {activeModuleKeys.map((modId) => {
+                    const mod = AVAILABLE_CORE_MODULES.find((m) => m.id === modId);
+                    if (!mod) return null;
+                    return (
+                      <div key={modId} className="module-chip-tag">
+                        <span>{mod.name}</span>
+                        <button
+                          type="button"
+                          className="chip-remove-btn"
+                          onClick={() => removeModule(modId)}
+                        >
+                          ✕
+                        </button>
+                      </div>
+                    );
+                  })}
                 </div>
               )}
 
-              {/* Active Modules Cards List */}
               <div className="selected-modules-stack">
                 <AnimatePresence>
                   {activeModuleKeys.map((modId) => {
@@ -196,34 +219,25 @@ export const RevFlowSimulator: React.FC = () => {
                       <motion.div
                         key={modId}
                         className="module-config-card"
-                        initial={{ opacity: 0, y: 15 }}
+                        initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, scale: 0.95 }}
-                        transition={{ duration: 0.25 }}
+                        transition={{ duration: 0.2 }}
                       >
                         <div className="module-card-top">
-                          <div>
+                          <div className="module-card-info-box">
                             <h4 className="module-card-title">{modData.name}</h4>
                             <p className="module-card-desc">{modData.description}</p>
                           </div>
                           <div className="module-price-tag">
-                            <span className="price-label">Price / Month</span>
+                            <span className="price-label">PRICE / MONTH</span>
                             <span className="price-value">
                               {modData.basePrice.toLocaleString()} PKR
                             </span>
                           </div>
-                          {activeModuleKeys.length > 1 && (
-                            <button
-                              className="remove-module-btn"
-                              onClick={() => removeModule(modId)}
-                              title="Remove Module"
-                            >
-                              ✕
-                            </button>
-                          )}
                         </div>
 
-                        {/* Add-ons Checkboxes */}
+                        {/* Add-on Checkbox Rows */}
                         {modData.addOns.length > 0 && (
                           <div className="module-addons-list">
                             {modData.addOns.map((ao) => {
@@ -235,7 +249,7 @@ export const RevFlowSimulator: React.FC = () => {
                                     checked={isChecked}
                                     onChange={() => toggleAddOn(modId, ao.id)}
                                   />
-                                  <span className="custom-check-box">
+                                  <span className={`custom-check-box ${isChecked ? 'checked' : ''}`}>
                                     {isChecked && <span className="check-mark">✓</span>}
                                   </span>
                                   <span className="addon-name-text">{ao.name}</span>
@@ -251,17 +265,20 @@ export const RevFlowSimulator: React.FC = () => {
                     );
                   })}
                 </AnimatePresence>
-
-                {activeModuleKeys.length === 0 && (
-                  <div className="empty-modules-notice">
-                    <p>No core modules selected. Please choose a module above.</p>
-                  </div>
-                )}
               </div>
+
+              <button
+                className="add-module-wide-btn"
+                onClick={handleAddModuleDropdown}
+                disabled={!dropdownValue}
+              >
+                <span className="plus-icon-circle">+</span>
+                <span>Add Module</span>
+              </button>
             </div>
 
-            {/* Step 2: Select Seats */}
-            <div className="control-step-block" style={{ marginTop: '35px' }}>
+            {/* Step 2 */}
+            <div className="control-step-block" style={{ marginTop: '30px' }}>
               <div className="step-label-row">
                 <span className="step-number-badge">2</span>
                 <h3 className="step-heading">Select Seats</h3>
@@ -269,7 +286,14 @@ export const RevFlowSimulator: React.FC = () => {
 
               <div className="seats-stepper-container">
                 <div className="seats-input-box">
-                  <span className="seats-display-number">{seats}</span>
+                  <motion.span
+                    key={seats}
+                    initial={{ opacity: 0.6, y: -2 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="seats-display-number"
+                  >
+                    {String(seats).padStart(2, '0')}
+                  </motion.span>
                 </div>
                 <div className="seats-control-buttons">
                   <button
@@ -281,24 +305,23 @@ export const RevFlowSimulator: React.FC = () => {
                   </button>
                   <button
                     className="seat-btn"
-                    onClick={() => setSeats(Math.min(10, seats + 1))}
-                    disabled={seats >= 10}
+                    onClick={() => setSeats(Math.min(6, seats + 1))}
+                    disabled={seats >= 6}
                   >
                     +
                   </button>
                 </div>
               </div>
-              <p className="seats-limit-info">Maximum 10 Seats (750 PKR/seat)</p>
+              <p className="seats-limit-info">Maximum 6 Seats</p>
             </div>
 
           </div>
 
-          {/* Right Column: Estimated Summary Sticky Card */}
+          {/* Right Column: Estimated Summary */}
           <div className="simulator-summary-col">
             <div className="summary-card">
               <h3 className="summary-card-main-title">Estimated Summary</h3>
 
-              {/* Core Modules Breakdown */}
               <div className="summary-section-row">
                 <div className="summary-section-header">Core Modules</div>
                 {activeModuleKeys.length > 0 ? (
@@ -324,7 +347,6 @@ export const RevFlowSimulator: React.FC = () => {
                 )}
               </div>
 
-              {/* Add-Ons Breakdown */}
               <div className="summary-section-row">
                 <div className="summary-section-header">Add-Ons</div>
                 {activeAddOnsList.length > 0 ? (
@@ -346,13 +368,12 @@ export const RevFlowSimulator: React.FC = () => {
                 )}
               </div>
 
-              {/* Total Seats Breakdown */}
               <div className="summary-section-row">
                 <div className="summary-section-header">Total Seats</div>
                 <div className="summary-item-line">
                   <motion.span
                     key={seats}
-                    initial={{ scale: 1.15, color: '#2b7a9e' }}
+                    initial={{ scale: 1.1, color: '#2b7a9e' }}
                     animate={{ scale: 1, color: '#1e293b' }}
                     transition={{ duration: 0.2 }}
                     className="item-name"
@@ -370,7 +391,6 @@ export const RevFlowSimulator: React.FC = () => {
                 </div>
               </div>
 
-              {/* Grand Total Estimated Footer */}
               <div className="summary-grand-total-box">
                 <div className="grand-total-label-row">
                   <span>Total Estimated</span>

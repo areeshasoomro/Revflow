@@ -1,5 +1,8 @@
+
+
 // import React from 'react';
 // import './RevFlowHero.css';
+// import { Link } from 'react-router-dom';
 
 // interface FeatureItem {
 //   id: string;
@@ -14,35 +17,35 @@
 //     id: 'shopify',
 //     label: 'Shopify Sync',
 //     dotCx: 25,
-//     dotCy: 392, // Sits precisely on the lower-left curve
+//     dotCy: 392,
 //     pillStyle: { top: '74%', left: '0%' },
 //   },
 //   {
 //     id: 'pay',
 //     label: 'Pay-Per-Use',
 //     dotCx: 60,
-//     dotCy: 270, // Sits precisely on the rising curve
+//     dotCy: 270,
 //     pillStyle: { top: '46%', left: '8%' },
 //   },
 //   {
 //     id: 'branch',
 //     label: 'Multi-Branch',
 //     dotCx: 220,
-//     dotCy: 160, // Sits precisely on the top apex
+//     dotCy: 160,
 //     pillStyle: { top: '22%', left: '32%' },
 //   },
 //   {
 //     id: 'modular',
 //     label: 'Modular ERP',
 //     dotCx: 408,
-//     dotCy: 190, // Sits precisely on the descending curve
+//     dotCy: 190,
 //     pillStyle: { top: '30%', left: '56%' },
 //   },
 //   {
 //     id: 'fbr',
 //     label: 'FBR Compliant',
 //     dotCx: 475,
-//     dotCy: 312, // Sits precisely on the lower-right curve
+//     dotCy: 312,
 //     pillStyle: { top: '54%', right: '2%' },
 //   },
 // ];
@@ -59,7 +62,7 @@
 //           </div>
 //           <div className="nav-links">
 //             <a href="#home" className="nav-link active">Home</a>
-//             <a href="#features" className="nav-link">Features</a>
+//             <Link to="/features" className="nav-link">Features</Link>
 //             <a href="#solutions" className="nav-link">Solutions</a>
 //             <a href="#pricing" className="nav-link">Pricing</a>
 //             <a href="#compliance" className="nav-link">FBR Compliance Hub</a>
@@ -91,7 +94,7 @@
 //           <div className="hero-visual-container">
 //             <div className="mockup-wrapper">
               
-//               {/* Perfectly Aligned Circular Arc Path with Smooth Line Drawing & Dot Animations */}
+//               {/* Dotted Arc Path with Line Drawing & Dot Animations */}
 //               <svg className="curve-svg" viewBox="0 0 560 450" fill="none" xmlns="http://www.w3.org/2000/svg">
 //                 <path 
 //                   className="animated-path"
@@ -138,9 +141,10 @@
 // export default RevFlowHero;
 
 
+
 import React from 'react';
 import './RevFlowHero.css';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 interface FeatureItem {
   id: string;
@@ -198,13 +202,25 @@ export const RevFlowHero: React.FC = () => {
           <div className="nav-logo-wrapper">
             <img src="/logo.png" alt="RevFlow Logo" className="logo-image" />
           </div>
+          
           <div className="nav-links">
-            <a href="#home" className="nav-link active">Home</a>
-            <Link to="/features" className="nav-link">Features</Link>
-            <a href="#solutions" className="nav-link">Solutions</a>
-            <a href="#pricing" className="nav-link">Pricing</a>
-            <a href="#compliance" className="nav-link">FBR Compliance Hub</a>
+            <NavLink to="/" end className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>
+              Home
+            </NavLink>
+            <NavLink to="/features" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>
+              Features
+            </NavLink>
+            <NavLink to="/solutions" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>
+              Solutions
+            </NavLink>
+            <NavLink to="/pricing" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>
+              Pricing
+            </NavLink>
+            <NavLink to="/compliance" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>
+              FBR Compliance Hub
+            </NavLink>
           </div>
+
           <button className="cta-button">
             <span>Get Started</span>
             <span className="cta-icon-circle">↗</span>

@@ -6,6 +6,11 @@ import { RevFlowHero } from "./RevFlowHero";
 import ZipTransformation from "./ZipTransformation";
 import FeaturesPage from "./FeaturesPage";
 import Footer from "./Footer";
+import RevFlowSimulator from "./RevFlowSimulator";
+import SelfServeSteps from "./SelfServeSteps";
+import FaqSection from "./FaqSection";
+import TrustedBySection from "./TrustedBySection";
+import SolutionsPage from "./SolutionsPage";
 
 // Landing Page Wrapper Component containing all your main sections
 function HomePage() {
@@ -15,6 +20,10 @@ function HomePage() {
       <RevFlowBuilder />  
       <AgilityTransformation /> 
       <ZipTransformation /> 
+      <RevFlowSimulator />  
+      <SelfServeSteps />
+      <FaqSection />
+      <TrustedBySection />
       <Footer />
     </div>
   );
@@ -27,8 +36,11 @@ function App() {
         {/* Main Landing Page */}
         <Route path="/" element={<HomePage />} />
         
-        {/* Separate Features Page opened when clicking 'Features' in the navbar */}
+        {/* Separate Features Page */}
         <Route path="/features" element={<FeaturesPage />} />
+
+        {/* Separate Solutions Page opened when clicking 'Solutions' in the navbar */}
+        <Route path="/solutions" element={<SolutionsPage />} />
       </Routes>
     </BrowserRouter>
   );

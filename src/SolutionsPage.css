@@ -157,7 +157,7 @@
 
 .solutions-main-title {
   font-family: 'Caveat', cursive;
-  font-size: 3.5rem;
+  font-size: 60.8px;
   font-weight: 700;
   color: var(--primary-navy);
   line-height: 1.1;
@@ -213,7 +213,7 @@
 
 .section-title {
   font-family: 'Caveat', cursive;
-  font-size: 3rem;
+  font-size: 60.8px;
   font-weight: 700;
   color: var(--primary-navy);
   line-height: 1.2;
@@ -329,4 +329,32 @@
 
 .explore-link:hover {
   gap: 10px;
+}
+
+
+/* 1. Reset page container paddings and prevent horizontal scroll overflow */
+.solutions-page {
+  padding: 0 !important;
+  margin: 0 !important;
+  width: 100%;
+  overflow-x: hidden;
+  box-sizing: border-box;
+}
+
+/* 2. Keep your content wrapper padded nicely */
+.solutions-wrapper {
+  padding-left: 4vw;
+  padding-right: 4vw;
+  max-width: 1400px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+/* 3. Make the footer touch the absolute bottom and sides safely without 100vw overflow */
+.solutions-page .footer-section, 
+.solutions-page footer {
+  width: 100%;
+  margin: 80px 0 0 0;
+  padding: 0;
+  box-sizing: border-box;
 }

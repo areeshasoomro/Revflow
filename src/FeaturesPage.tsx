@@ -18,80 +18,80 @@ const coreFeatures: Feature[] = [
     iconUrl: '/Inventory-icon.png',
     title: 'Inventory',
     description: 'Catalogs, stock in/out, reorder alerts.',
-    learnMoreLink: '#',
+    learnMoreLink: '/features/inventory',
   },
   {
     id: 'hr',
     iconUrl: '/HR-icon.png',
     title: 'HR Management',
     description: 'Employee records, leave approvals, payroll.',
-    learnMoreLink: '#',
+    learnMoreLink: '/features/hr-management',
   },
   {
     id: 'branch',
     iconUrl: '/Multibranch-icon.png',
     title: 'Multi-Branch',
     description: 'Branch-scoped security, role templates.',
-    learnMoreLink: '#',
+    learnMoreLink: '/features/multi-branch',
   },
   {
     id: 'sales',
     iconUrl: '/Sales-icon.png',
     title: 'Sales',
     description: 'Quotations, automated invoicing, price lists.',
-    learnMoreLink: '#',
+    learnMoreLink: '/features/sales',
   },
   {
     id: 'accounting',
     iconUrl: '/Accounting-icon.png',
     title: 'Accounting',
     description: 'Charts of Accounts, auto entries, P&L.',
-    learnMoreLink: '#',
+    learnMoreLink: '/features/accounting',
   },
 ];
 
 const specializedExtensions: Feature[] = [
   {
     id: 'fbr-pos',
-    iconUrl: '/FBR-POS.png', // Fallback filename or your exact icon filename
+    iconUrl: '/FBR-POS.png',
     title: 'FBR POS',
     description: 'Automate compliant reporting.',
-    learnMoreLink: '#',
+    learnMoreLink: '/features/fbr-pos',
   },
   {
     id: 'hr-payroll',
     iconUrl: '/hr-payroll.png',
     title: 'HR & Payroll',
     description: 'Automate salaries & payslips.',
-    learnMoreLink: '#',
+    learnMoreLink: '/features/hr-payroll',
   },
   {
     id: 'shopify-sync',
-    iconUrl: '/shopify.png', // Added as requested
+    iconUrl: '/shopify.png',
     title: 'Shopify Sync',
     description: 'Sync products & orders.',
-    learnMoreLink: '#',
+    learnMoreLink: '/features/shopify-sync',
   },
   {
     id: 'whatsapp',
     iconUrl: '/whatsapp.png',
     title: 'Whatsapp',
     description: 'Send updates automatically.',
-    learnMoreLink: '#',
+    learnMoreLink: '/features/whatsapp',
   },
   {
     id: 'fbr-invoicing',
     iconUrl: '/fbr-invoice.png',
     title: 'FBR Invoicing',
     description: 'Create compliant e-invoices.',
-    learnMoreLink: '#',
+    learnMoreLink: '/features/fbr-invoicing',
   },
   {
     id: 'crm',
     iconUrl: '/CRM.png',
     title: 'CRM',
     description: 'Manage leads & follow-ups.',
-    learnMoreLink: '#',
+    learnMoreLink: '/features/crm',
   },
 ];
 
@@ -108,9 +108,9 @@ export const FeaturesPage: React.FC = () => {
         <div className="nav-links">
           <Link to="/" className="nav-link">Home</Link>
           <Link to="/features" className="nav-link active">Features</Link>
-          <a href="#solutions" className="nav-link">Solutions</a>
-          <a href="#pricing" className="nav-link">Pricing</a>
-          <a href="#compliance" className="nav-link">FBR Compliance Hub</a>
+          <Link to="/solutions" className="nav-link">Solutions</Link>
+          <a href="/#pricing" className="nav-link">Pricing</a>
+          <a href="/#compliance" className="nav-link">FBR Compliance Hub</a>
         </div>
         <button className="cta-button">
           <span>Get Started</span>
@@ -148,9 +148,9 @@ export const FeaturesPage: React.FC = () => {
                 </div>
                 <h2 className="card-title">{feature.title}</h2>
                 <p className="card-description">{feature.description}</p>
-                <a href={feature.learnMoreLink} className="learn-more-link">
+                <Link to={feature.learnMoreLink} className="learn-more-link">
                   Learn More &rarr;
-                </a>
+                </Link>
               </div>
             </article>
           ))}
@@ -185,9 +185,9 @@ export const FeaturesPage: React.FC = () => {
                   </div>
                   <h3 className="card-title">{extension.title}</h3>
                   <p className="card-description">{extension.description}</p>
-                  <a href={extension.learnMoreLink} className="learn-more-link">
+                  <Link to={extension.learnMoreLink} className="learn-more-link">
                     Learn More &rarr;
-                  </a>
+                  </Link>
                 </div>
               </article>
             ))}

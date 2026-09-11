@@ -25,8 +25,7 @@ import WhatsAppFeaturePage from "./pages/WhatsAppFeaturePage";
 import FbrInvoicingFeaturePage from "./pages/FbrInvoicingFeaturePage";
 import CrmFeaturePage from "./pages/CrmFeaturePage";
 import { PricingPage } from "./PricingPage";
-import { FBRCompliancePage } from "./FbrCompliancePage";
-
+import { FBRCompliancePage } from "./FBRCompliancePage";
 
 
 function HomePage() {

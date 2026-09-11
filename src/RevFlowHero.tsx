@@ -72,7 +72,7 @@ export const RevFlowHero: React.FC = () => {
             <a href="/pricing" className="nav-link">
               Pricing
             </a>
-            <a href="/#compliance" className="nav-link">
+            <a href="/compliance" className="nav-link">
               FBR Compliance Hub
             </a>
           </div>

@@ -21,8 +21,8 @@
 /* --- Navbar Styling --- */
 .revflow-navbar {
   width: 100%;
-  max-width: 1350px;
-  margin-top: 20px;
+  max-width: 1000px;
+  margin-top: 40px;
   display: flex;
   align-items: center;
   justify-content: space-between;

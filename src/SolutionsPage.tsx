@@ -220,10 +220,7 @@ export const SolutionsPage: React.FC = () => {
           </button>
         </nav>
 
-        {/* Left-Aligned Back Button */}
-        <div className="back-link-container">
-          <Link to="/" className="back-button">←</Link>
-        </div>
+        
 
         {/* Hero Header Area */}
         <div className="solutions-header">

@@ -1,11 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import Footer from './Footer';
 import './RevFlowHero.css'; // Reusing your global navbar and theme styles
 
 export const FBRCompliancePage: React.FC = () => {
-  const [isSecurityHovered, setIsSecurityHovered] = useState(false);
-
   return (
     <div style={{ backgroundColor: '#EDF2F7', minHeight: '100vh', overflowX: 'hidden' }}>
       

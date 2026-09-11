@@ -25,7 +25,8 @@ import WhatsAppFeaturePage from "./pages/WhatsAppFeaturePage";
 import FbrInvoicingFeaturePage from "./pages/FbrInvoicingFeaturePage";
 import CrmFeaturePage from "./pages/CrmFeaturePage";
 import { PricingPage } from "./PricingPage";
-import FbrCompliancePage from "./FbrCompliancePage";
+import FBRCompliancePage from "./FbrCompliancePage";
+
 
 function HomePage() {
   return (
@@ -50,7 +51,7 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/features" element={<FeaturesPage />} />
         <Route path="/pricing" element={<PricingPage />} />
-        <Route path="/compliance" element={<FbrCompliancePage />} />
+        <Route path="/compliance" element={<FBRCompliancePage />} />
         
         {/* Solutions Routes */}
         <Route path="/solutions" element={<SolutionsPage />} />

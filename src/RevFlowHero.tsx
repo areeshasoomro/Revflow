@@ -69,12 +69,12 @@ export const RevFlowHero: React.FC = () => {
             <NavLink to="/solutions" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>
               Solutions
             </NavLink>
-            <a href="/pricing" className="nav-link">
+            <NavLink to="/pricing" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>
               Pricing
-            </a>
-            <a href="/compliance" className="nav-link">
+            </NavLink>
+            <NavLink to="/compliance" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>
               FBR Compliance Hub
-            </a>
+            </NavLink>
           </div>
 
           <button className="cta-button">

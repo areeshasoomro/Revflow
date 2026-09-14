@@ -6,7 +6,7 @@ import { RevFlowHero } from "./RevFlowHero";
 import ZipTransformation from "./ZipTransformation";
 import FeaturesPage from "./FeaturesPage";
 import Footer from "./Footer";
-import RevFlowSimulator from "./RevFlowSimulator";
+
 import SelfServeSteps from "./SelfServeSteps";
 import FaqSection from "./FaqSection";
 import TrustedBySection from "./TrustedBySection";

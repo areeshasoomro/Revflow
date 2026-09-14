@@ -7,7 +7,6 @@ import ZipTransformation from "./ZipTransformation";
 import FeaturesPage from "./FeaturesPage";
 import Footer from "./Footer";
 
-import SelfServeSteps from "./SelfServeSteps";
 import FaqSection from "./FaqSection";
 import TrustedBySection from "./TrustedBySection";
 import SolutionsPage from "./SolutionsPage";
@@ -37,7 +36,7 @@ function HomePage() {
       <RevFlowBuilder />  
       
      
-      <SelfServeSteps />
+   
        <TrustedBySection />
       <FaqSection />
      

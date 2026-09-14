@@ -56,8 +56,6 @@
   box-shadow: 0 20px 40px -10px rgba(27, 54, 93, 0.15);
 }
 
-
-
 /* Background Layer: The New Way (RevFlow Way) */
 .revFlowLayer {
   position: absolute;
@@ -114,7 +112,6 @@
   box-sizing: border-box;
   will-change: transform;
 }
-
 
 .rightFlap {
   right: 0;
@@ -213,12 +210,11 @@
   pointer-events: none;
 }
 
-/* Draggable Zipper Pull Head */
+/* Draggable Zipper Pull Head (Horizontal centering moved to Framer Motion style prop) */
 .zipperPull {
   position: absolute;
   left: 50%;
   top: calc(var(--progress) * 88%);
-  transform: translateX(-50%);
   width: 32px;
   height: 44px;
   background: linear-gradient(135deg, #f1f5f9 0%, #cbd5e1 50%, #64748b 100%);
@@ -248,25 +244,23 @@
   border: 1px solid #1e293b;
 }
 
-
 .screenContent {
   position: relative;
   width: 100%;
   height: 500px;
-  background: #f1f5f9; /* Slightly darker background contrast for the revealed area */
+  background: #f1f5f9;
   border-radius: 12px;
   overflow: hidden;
   box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
   --progress: 0; 
 }
 
-/* Give the left flap a distinct off-white tone so its shape and edge are clearly visible */
 .leftFlap {
   left: 0;
   transform-origin: left center;
   transform: translateX(calc(var(--progress) * -100%)) rotate(calc(var(--progress) * -10deg));
-  background: #f8fafc; /* Subtle off-white tint to separate flap from white cards */
+  background: #f8fafc;
   border-right: 2px dashed #cbd5e1;
-  box-shadow: 10px 0 25px -5px rgba(0, 0, 0, 0.08); /* Casts a nice depth shadow over the background */
+  box-shadow: 10px 0 25px -5px rgba(0, 0, 0, 0.08);
   padding: 15px 15px 15px 30px;
 }

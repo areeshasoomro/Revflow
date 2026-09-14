@@ -108,9 +108,10 @@ export default function ZipTransformation() {
           {/* CENTER METAL ZIPPER TRACK */}
           <div className={styles.centerZipTrack} />
 
-          {/* INTERACTIVE ZIPPER PULL HANDLE (Bidirectional up/down drag, stoppable anywhere) */}
+          {/* INTERACTIVE ZIPPER PULL HANDLE */}
           <motion.div 
             className={styles.zipperPull}
+            style={{ x: "-50%" }}
             drag="y"
             dragConstraints={{ top: 0, bottom: 400 }}
             dragElastic={0}
@@ -118,9 +119,7 @@ export default function ZipTransformation() {
               isDraggingRef.current = true;
             }}
             onDrag={(_, info) => {
-              // Use delta movement so it reacts smoothly when dragged both upwards and downwards
               const currentVal = progressValue.get();
-              // 400px is the track height range; delta.y shifts progress incrementally
               const deltaProgress = info.delta.y / 400;
               const nextVal = Math.max(0, Math.min(1, currentVal + deltaProgress));
               progressValue.set(nextVal);

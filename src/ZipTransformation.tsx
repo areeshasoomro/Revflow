@@ -1,23 +1,33 @@
-import { useRef } from 'react';
-import { motion, useTransform, useScroll } from 'framer-motion';
+import { useRef, useEffect } from 'react';
+import { motion, useScroll, useTransform, useMotionValue } from 'framer-motion';
 import styles from './ZipTransformation.module.css';
 
 export default function ZipTransformation() {
-  const containerRef = useRef<HTMLDivElement>(null);
   const sectionRef = useRef<HTMLElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   
-  // Track vertical movement linked to scroll progress of this specific section
+  // Track section scroll progress
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start end", "end start"]
   });
   
-  // Map scroll progress so the zip opens automatically as user scrolls into the section, and pauses/stops wherever scroll stops
-  const scrollY = useTransform(scrollYProgress, [0.15, 0.55], [0, 400]);
+  // Motion value representing normalized progress from 0 to 1
+  const progressValue = useMotionValue(0);
 
-  // Link left/right panel separation to the scroll/drag motion values
-  const leftX = useTransform(scrollY, [0, 400], ['0%', '-100%']);
-  const rightX = useTransform(scrollY, [0, 400], ['0%', '100%']);
+  // Map scroll progress to normalized 0 -> 1 value
+  const scrollMappedProgress = useTransform(scrollYProgress, [0.2, 0.6], [0, 1]);
+
+  // Keep scroll sync active when not dragging
+  const isDraggingRef = useRef(false);
+
+  useEffect(() => {
+    return scrollMappedProgress.onChange((latest) => {
+      if (!isDraggingRef.current) {
+        progressValue.set(latest);
+      }
+    });
+  }, [scrollMappedProgress, progressValue]);
 
   return (
     <section className={styles.transformationSection} ref={sectionRef}>
@@ -31,13 +41,17 @@ export default function ZipTransformation() {
           <span className={styles.accentText}>RevFlow Way.</span>
         </h2>
         <p className={styles.subtext}>
-          Scroll down to watch the zip automatically open, or grab and drag the handle manually to any position.
+          Scroll down or drag the zipper handle up and down manually to any position along the track.
         </p>
       </div>
 
       {/* Laptop Container */}
       <div className={styles.laptopFrame}>
-        <div className={styles.screenContent} ref={containerRef}>
+        <motion.div 
+          className={styles.screenContent} 
+          ref={containerRef}
+          style={{ '--progress': progressValue } as any}
+        >
           
           {/* BACKGROUND LAYER: The New Way (RevFlow Way) */}
           <div className={styles.revFlowLayer}>
@@ -63,11 +77,8 @@ export default function ZipTransformation() {
             </div>
           </div>
 
-          {/* FOREGROUND LEFT HALF: Old Way Text Content */}
-          <motion.div 
-            className={`${styles.oldWayHalf} ${styles.leftHalf}`}
-            style={{ x: leftX }}
-          >
+          {/* LEFT CURTAIN FLAP */}
+          <div className={`${styles.jacketFlap} ${styles.leftFlap}`}>
             <div className={styles.contentColumn}>
               <h3 className={styles.panelTitle}>The Old Way</h3>
               <div className={styles.doodleContainer}>
@@ -85,33 +96,43 @@ export default function ZipTransformation() {
                 </div>
               </div>
             </div>
-          </motion.div>
+          </div>
 
-          {/* FOREGROUND RIGHT HALF: Old Way Doodle Image */}
-          <motion.div 
-            className={`${styles.oldWayHalf} ${styles.rightHalf}`}
-            style={{ x: rightX }}
-          >
+          {/* RIGHT CURTAIN FLAP */}
+          <div className={`${styles.jacketFlap} ${styles.rightFlap}`}>
             <div className={styles.doodleColumn}>
               <img src="/old-way-doo.png" alt="Old Way Illustration" className={styles.doodleImage} />
             </div>
-          </motion.div>
+          </div>
 
           {/* CENTER METAL ZIPPER TRACK */}
           <div className={styles.centerZipTrack} />
 
-          {/* INTERACTIVE ZIPPER SLIDER HANDLE (Moves via scroll or manual drag) */}
+          {/* INTERACTIVE ZIPPER PULL HANDLE (Bidirectional up/down drag, stoppable anywhere) */}
           <motion.div 
-            className={styles.zipperSliderHandle}
+            className={styles.zipperPull}
             drag="y"
             dragConstraints={{ top: 0, bottom: 400 }}
-            dragElastic={0.02}
-            style={{ y: scrollY }}
+            dragElastic={0}
+            onDragStart={() => {
+              isDraggingRef.current = true;
+            }}
+            onDrag={(_, info) => {
+              // Use delta movement so it reacts smoothly when dragged both upwards and downwards
+              const currentVal = progressValue.get();
+              // 400px is the track height range; delta.y shifts progress incrementally
+              const deltaProgress = info.delta.y / 400;
+              const nextVal = Math.max(0, Math.min(1, currentVal + deltaProgress));
+              progressValue.set(nextVal);
+            }}
+            onDragEnd={() => {
+              isDraggingRef.current = false;
+            }}
           >
-            <div className={styles.zipperPullTab} />
+            <span className={styles.pullTabHandle} />
           </motion.div>
 
-        </div>
+        </motion.div>
       </div>
     </section>
   );

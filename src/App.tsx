@@ -32,13 +32,15 @@ function HomePage() {
   return (
     <div>
       <RevFlowHero />
-      <RevFlowBuilder />  
       <AgilityTransformation /> 
-      <ZipTransformation /> 
-      <RevFlowSimulator />  
+       <ZipTransformation /> 
+      <RevFlowBuilder />  
+      
+     
       <SelfServeSteps />
+       <TrustedBySection />
       <FaqSection />
-      <TrustedBySection />
+     
       <Footer />
     </div>
   );

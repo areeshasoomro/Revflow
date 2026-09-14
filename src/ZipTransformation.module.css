@@ -56,15 +56,7 @@
   box-shadow: 0 20px 40px -10px rgba(27, 54, 93, 0.15);
 }
 
-.screenContent {
-  position: relative;
-  width: 100%;
-  height: 500px;
-  background: #ffffff;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
-}
+
 
 /* Background Layer: The New Way (RevFlow Way) */
 .revFlowLayer {
@@ -109,26 +101,26 @@
   filter: drop-shadow(0 10px 15px rgba(0,0,0,0.08));
 }
 
-/* Foreground Layer Halves */
-.oldWayHalf {
+/* Jacket Flaps / Curtain Panels */
+.jacketFlap {
   position: absolute;
   top: 0;
-  bottom: 0;
   width: 50%;
+  height: 100%;
   background: #ffffff;
   display: flex;
   z-index: 2;
   overflow: hidden;
+  box-sizing: border-box;
+  will-change: transform;
 }
 
-.leftHalf {
-  left: 0;
-  padding: 15px 15px 15px 30px;
-  border-right: 1px solid rgba(0,0,0,0.04);
-}
 
-.rightHalf {
+.rightFlap {
   right: 0;
+  transform-origin: right center;
+  transform: translateX(calc(var(--progress) * 100%)) rotate(calc(var(--progress) * 10deg));
+  border-left: 2px dashed #cbd5e1;
   padding: 20px;
   justify-content: center;
   align-items: center;
@@ -145,7 +137,6 @@
   width: 100%;
 }
 
-/* Centered Content Cards & Lists */
 .doodleContainer {
   display: flex;
   flex-direction: column;
@@ -208,7 +199,7 @@
   left: 50%;
   top: 0;
   bottom: 0;
-  width: 10px;
+  width: 6px;
   transform: translateX(-50%);
   background: repeating-linear-gradient(
     0deg,
@@ -222,37 +213,60 @@
   pointer-events: none;
 }
 
-/* Draggable & Clickable Metallic Zipper Slider Handle */
-.zipperSliderHandle {
+/* Draggable Zipper Pull Head */
+.zipperPull {
   position: absolute;
   left: 50%;
-  top: 0;
-  width: 32px;
-  height: 42px;
+  top: calc(var(--progress) * 88%);
   transform: translateX(-50%);
+  width: 32px;
+  height: 44px;
   background: linear-gradient(135deg, #f1f5f9 0%, #cbd5e1 50%, #64748b 100%);
   border-radius: 6px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  cursor: grab;
+  z-index: 20;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4), inset 0 2px 3px rgba(255, 255, 255, 0.7);
   border: 1px solid #334155;
-  z-index: 20;
-  cursor: pointer;
   touch-action: none;
 }
 
-.zipperSliderHandle:hover {
-  transform: translateX(-50%) scale(1.05);
+.zipperPull:active {
+  cursor: grabbing;
 }
 
-.zipperPullTab {
-  width: 10px;
-  height: 20px;
-  border: 2px solid #94a3b8;
-  border-radius: 4px;
-  background: #334155;
+.pullTabHandle {
+  content: '';
   position: absolute;
-  bottom: -14px;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 12px;
+  height: 24px;
+  background: #334155;
+  border-radius: 0 0 6px 6px;
   box-shadow: 0 3px 6px rgba(0,0,0,0.3);
+  border: 1px solid #1e293b;
+}
+
+
+.screenContent {
+  position: relative;
+  width: 100%;
+  height: 500px;
+  background: #f1f5f9; /* Slightly darker background contrast for the revealed area */
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
+  --progress: 0; 
+}
+
+/* Give the left flap a distinct off-white tone so its shape and edge are clearly visible */
+.leftFlap {
+  left: 0;
+  transform-origin: left center;
+  transform: translateX(calc(var(--progress) * -100%)) rotate(calc(var(--progress) * -10deg));
+  background: #f8fafc; /* Subtle off-white tint to separate flap from white cards */
+  border-right: 2px dashed #cbd5e1;
+  box-shadow: 10px 0 25px -5px rgba(0, 0, 0, 0.08); /* Casts a nice depth shadow over the background */
+  padding: 15px 15px 15px 30px;
 }

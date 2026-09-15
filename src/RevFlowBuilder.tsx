@@ -1,6 +1,8 @@
 
 
 
+
+
 // import React, { useState } from 'react';
 // import { motion } from 'framer-motion';
 // import './RevFlowBuilder.css';
@@ -154,7 +156,6 @@
 //   const [activeModules, setActiveModules] = useState<string[]>([]);
 //   const [expandedModule, setExpandedModule] = useState<string | null>(null);
 //   const [seats, setSeats] = useState<number>(0);
-//   const [activeStepIndex, setActiveStepIndex] = useState<number>(0);
 
 //   const [activeAddons, setActiveAddons] = useState<Record<string, boolean>>({
 //     inv_shopify: false,
@@ -169,6 +170,22 @@
 //     mb_currency: false,
 //   });
 
+//   const isStep1Done = activeModules.length > 0;
+//   const isStep2Done = seats > 0;
+//   const canRegister = isStep1Done && isStep2Done;
+
+//   // Updated step progression logic:
+//   // - If Step 1 & Step 2 are done -> Step 3 (Register) is active.
+//   // - If only Step 1 is done -> Step 2 (Add Seats) is active.
+//   // - Otherwise -> Step 1 (Pick Modules) is active.
+//   const getDynamicActiveStepIndex = () => {
+//     if (isStep1Done && isStep2Done) return 2; // Step 3 index
+//     if (isStep1Done) return 1; // Step 2 index
+//     return 0; // Step 1 index
+//   };
+
+//   const activeStepIndex = getDynamicActiveStepIndex();
+
 //   const toggleModule = (id: string) => {
 //     let updatedModules;
 //     if (activeModules.includes(id)) {
@@ -179,10 +196,6 @@
 //       updatedModules = [...activeModules, id];
 //       setActiveModules(updatedModules);
 //       setExpandedModule(id);
-//     }
-
-//     if (updatedModules.length > 0) {
-//       setActiveStepIndex(1);
 //     }
 //   };
 
@@ -196,20 +209,10 @@
 //   };
 
 //   const handleSeatChange = (delta: number) => {
-//     setSeats(prev => {
-//       const newSeats = Math.min(10, Math.max(0, prev + delta));
-//       if (newSeats > 0) {
-//         setActiveStepIndex(2);
-//       }
-//       return newSeats;
-//     });
+//     setSeats(prev => Math.min(10, Math.max(0, prev + delta)));
 //   };
 
 //   const activeModuleList = AVAILABLE_MODULES.filter(m => activeModules.includes(m.id));
-
-//   const isStep1Done = activeModules.length > 0;
-//   const isStep2Done = seats > 0;
-//   const canRegister = isStep1Done && isStep2Done;
 
 //   return (
 //     <section className="revflow-builder-section">
@@ -222,7 +225,71 @@
 //         </p>
 //       </div>
 
-//       <div className="builder-workspace-three-col">
+//       {/* TOP STACKED CARDS DECK CONTAINER */}
+//       <div className="top-steps-bar-container">
+//         <div className="top-steps-bar-header">
+//           <div className="live-preview-badge">
+//             <span className="live-dot"></span> Onboarding Steps
+//           </div>
+          
+//           <motion.button 
+//             className={`get-started-pill-btn ${canRegister ? 'active-glow' : 'disabled-glow'}`}
+//             animate={canRegister ? { scale: [1, 1.03, 1] } : { scale: 1 }}
+//             transition={{ repeat: canRegister ? Infinity : 0, duration: 2 }}
+//             onClick={() => {
+//               if (canRegister) {
+//                 alert('Proceeding to Registration Workflow!');
+//               } else {
+//                 alert('Please complete Step 1 (Pick Modules) and Step 2 (Add Seats) first!');
+//               }
+//             }}
+//           >
+//             <span className="btn-text">Register Now</span>
+//             <span className="btn-icon-circle">
+//               <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+//                 <line x1="7" y1="17" x2="17" y2="7"></line>
+//                 <polyline points="7 7 17 7 17 17"></polyline>
+//               </svg>
+//             </span>
+//           </motion.button>
+//         </div>
+
+//         {/* Cascading Horizontal Stack Deck Wrapper */}
+//         <div className="stacked-cards-deck-wrapper">
+//           {STEPS_DATA.map((step, index) => {
+//             const isActive = index === activeStepIndex;
+            
+//             const isCompleted = 
+//               (index === 0 && isStep1Done) || 
+//               (index === 1 && isStep2Done);
+
+//             return (
+//               <div
+//                 key={step.id}
+//                 className={`stacked-step-card ${isActive ? 'active-stacked-card' : ''}`}
+//               >
+//                 <div className={`step-icon-box ${isActive ? 'active' : ''}`}>
+//                   {step.icon}
+//                 </div>
+//                 <div className="step-content-box">
+//                   <h4 className="step-card-title">{step.title}</h4>
+//                   <p className="step-card-desc">{step.description}</p>
+//                 </div>
+//                 {/* Green badge styling applied when completed */}
+//                 <div 
+//                   className={`step-badge ${isCompleted ? 'active-done-green' : ''}`}
+//                   style={isCompleted ? { backgroundColor: '#10B981', color: '#FFFFFF', borderColor: '#10B981' } : {}}
+//                 >
+//                   {isCompleted ? 'DONE ✓' : step.stepNumber}
+//                 </div>
+//               </div>
+//             );
+//           })}
+//         </div>
+//       </div>
+
+//       {/* 2-COLUMN WORKSPACE */}
+//       <div className="builder-workspace-two-col">
         
 //         {/* COLUMN 1: Control Panel */}
 //         <div className="control-panel">
@@ -311,16 +378,16 @@
 //           </div>
 //         </div>
 
-//         {/* COLUMN 2: Tree Workflow Preview */}
-//         <div className="preview-canvas">
+//         {/* COLUMN 2: Full Width Tree Workflow / Neural Network Preview Canvas */}
+//         <div className="preview-canvas-expanded">
 //           <div className="live-preview-badge">
-//             <span className="live-dot"></span> Tree Workflow
+//             <span className="live-dot"></span> Tree Workflow / Neural Network Canvas
 //           </div>
 
-//           <div className="canvas-tree-container">
+//           <div className="canvas-tree-container-expanded">
 //             {activeModules.length === 0 ? (
 //               <div className="empty-preview-state">
-//                 <p>Toggle modules on the left to build your workflow tree.</p>
+//                 <p>Toggle modules on the left to build your workflow tree diagram.</p>
 //               </div>
 //             ) : (
 //               <div className="tree-stack-wrapper-clean">
@@ -372,99 +439,12 @@
 //           </div>
 //         </div>
 
-//         {/* COLUMN 3: Stacked Steps Deck */}
-//         <div className="steps-middle-column">
-//           <div className="steps-top-wrapper">
-//             <div className="steps-header-row-top">
-//               <div className="live-preview-badge">
-//                 <span className="live-dot"></span> Onboarding Steps
-//               </div>
-              
-//               <motion.button 
-//                 className={`get-started-pill-btn ${canRegister ? 'active-glow' : 'disabled-glow'}`}
-//                 animate={canRegister ? { scale: [1, 1.03, 1] } : { scale: 1 }}
-//                 transition={{ repeat: canRegister ? Infinity : 0, duration: 2 }}
-//                 onClick={() => {
-//                   if (canRegister) {
-//                     alert('Proceeding to Registration Workflow!');
-//                   } else {
-//                     alert('Please complete Step 1 (Pick Modules) and Step 2 (Add Seats) first!');
-//                   }
-//                 }}
-//               >
-//                 <span className="btn-text">Register Now</span>
-//                 <span className="btn-icon-circle">
-//                   <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-//                     <line x1="7" y1="17" x2="17" y2="7"></line>
-//                     <polyline points="7 7 17 7 17 17"></polyline>
-//                   </svg>
-//                 </span>
-//               </motion.button>
-//             </div>
-
-//             {/* STACKED VIEWPORT (Balanced Symmetrical Card Deck Stack) */}
-//             <div className="cards-stack-viewport">
-//               {STEPS_DATA.map((step, index) => {
-//                 const isActive = index === activeStepIndex;
-//                 const offsetFromActive = index - activeStepIndex;
-
-//                 let yOffset = offsetFromActive * 68; 
-//                 let scaleVal = isActive ? 1 : Math.max(0.82, 1 - Math.abs(offsetFromActive) * 0.06);
-//                 let opacityVal = isActive ? 1 : Math.max(0.2, 1 - Math.abs(offsetFromActive) * 0.25);
-
-//                 const isCompleted = 
-//                   (index === 0 && isStep1Done) || 
-//                   (index === 1 && isStep2Done);
-
-//                 return (
-//                   <motion.div
-//                     key={step.id}
-//                     className={`step-card-item ${isActive ? 'active' : ''}`}
-//                     onClick={() => setActiveStepIndex(index)}
-//                     animate={{
-//                       y: yOffset,
-//                       scale: scaleVal,
-//                       opacity: opacityVal,
-//                       zIndex: isActive ? 50 : 20 - Math.abs(offsetFromActive),
-//                     }}
-//                     transition={{ type: 'spring', stiffness: 280, damping: 26 }}
-//                   >
-//                     <div className={`step-icon-box ${isActive ? 'active' : ''}`}>
-//                       {step.icon}
-//                     </div>
-
-//                     <div className="step-content-box">
-//                       <h4 className="step-card-title">{step.title}</h4>
-//                       <p className="step-card-desc">{step.description}</p>
-//                     </div>
-
-//                     <div className={`step-badge ${isCompleted ? 'done' : ''} ${isActive ? 'active' : ''}`}>
-//                       {isCompleted ? 'DONE ✓' : step.stepNumber}
-//                     </div>
-//                   </motion.div>
-//                 );
-//               })}
-//             </div>
-
-//             <div className="carousel-dots-row">
-//               {STEPS_DATA.map((_, idx) => (
-//                 <button 
-//                   key={idx} 
-//                   className={`dot-indicator ${idx === activeStepIndex ? 'active' : ''}`} 
-//                   onClick={() => setActiveStepIndex(idx)} 
-//                 />
-//               ))}
-//             </div>
-//           </div>
-//         </div>
-
 //       </div>
 //     </section>
 //   );
 // };
 
 // export default RevFlowBuilder;
-
 
 
 
@@ -496,16 +476,6 @@ interface StepItem {
 
 const AVAILABLE_MODULES: ModuleConfig[] = [
   {
-    id: 'inventory',
-    name: 'Inventory',
-    description: 'Track stock, manage items and categories.',
-    iconPath: '/Inventory-icon.png',
-    addons: [
-      { id: 'inv_shopify', name: 'Shopify Sync', iconPath: '/Shopify-icon.png' },
-      { id: 'inv_whatsapp', name: 'WhatsApp Alerts', iconPath: '/Whatsapp-icon.png' }
-    ]
-  },
-  {
     id: 'sales',
     name: 'Sales',
     description: 'Track sales, orders, and point of sale.',
@@ -513,6 +483,16 @@ const AVAILABLE_MODULES: ModuleConfig[] = [
     addons: [
       { id: 'sales_pos', name: 'POS Terminal', iconPath: '/POS-icon.png' },
       { id: 'sales_online', name: 'Online Storefront', iconPath: '/Online-icon.png' }
+    ]
+  },
+  {
+    id: 'inventory',
+    name: 'Inventory',
+    description: 'Track stock, manage items and categories.',
+    iconPath: '/Inventory-icon.png',
+    addons: [
+      { id: 'inv_shopify', name: 'Shopify Sync', iconPath: '/Shopify-icon.png' },
+      { id: 'inv_whatsapp', name: 'Whatsapp', iconPath: '/Whatsapp-icon.png' }
     ]
   },
   {
@@ -554,7 +534,7 @@ const STEPS_DATA: StepItem[] = [
     title: 'Pick Modules / Addons',
     description: 'Choose what your business needs.',
     icon: (
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
         <rect x="3" y="3" width="7" height="7" />
         <rect x="14" y="3" width="7" height="7" />
         <rect x="14" y="14" width="7" height="7" />
@@ -568,7 +548,7 @@ const STEPS_DATA: StepItem[] = [
     title: 'Add Seats',
     description: 'Set up team & locations.',
     icon: (
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
         <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
         <circle cx="9" cy="7" r="4" />
         <line x1="19" y1="8" x2="19" y2="14" />
@@ -582,7 +562,7 @@ const STEPS_DATA: StepItem[] = [
     title: 'Register',
     description: 'Create account & verify.',
     icon: (
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
         <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
         <circle cx="9" cy="7" r="4" />
         <polyline points="16 11 18 13 22 9" />
@@ -595,7 +575,7 @@ const STEPS_DATA: StepItem[] = [
     title: 'Invite Team',
     description: 'Assign roles to people.',
     icon: (
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
         <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
         <circle cx="9" cy="7" r="4" />
         <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
@@ -609,7 +589,7 @@ const STEPS_DATA: StepItem[] = [
     title: 'Grow',
     description: 'Launch and track performance.',
     icon: (
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
         <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" />
         <polyline points="17 6 23 6 23 12" />
       </svg>
@@ -618,20 +598,20 @@ const STEPS_DATA: StepItem[] = [
 ];
 
 export const RevFlowBuilder: React.FC = () => {
-  const [activeModules, setActiveModules] = useState<string[]>([]);
-  const [expandedModule, setExpandedModule] = useState<string | null>(null);
-  const [seats, setSeats] = useState<number>(0);
+  const [activeModules, setActiveModules] = useState<string[]>(['sales', 'inventory', 'accounting', 'hr', 'multibranch']);
+  const [expandedModule, setExpandedModule] = useState<string | null>('inventory');
+  const [seats, setSeats] = useState<number>(3);
 
   const [activeAddons, setActiveAddons] = useState<Record<string, boolean>>({
-    inv_shopify: false,
-    inv_whatsapp: false,
-    sales_pos: false,
+    inv_shopify: true,
+    inv_whatsapp: true,
+    sales_pos: true,
     sales_online: false,
-    acc_tax: false,
+    acc_tax: true,
     acc_invoice: false,
-    hr_payroll: false,
+    hr_payroll: true,
     hr_attendance: false,
-    mb_warehouse: false,
+    mb_warehouse: true,
     mb_currency: false,
   });
 
@@ -639,14 +619,10 @@ export const RevFlowBuilder: React.FC = () => {
   const isStep2Done = seats > 0;
   const canRegister = isStep1Done && isStep2Done;
 
-  // Updated step progression logic:
-  // - If Step 1 & Step 2 are done -> Step 3 (Register) is active.
-  // - If only Step 1 is done -> Step 2 (Add Seats) is active.
-  // - Otherwise -> Step 1 (Pick Modules) is active.
   const getDynamicActiveStepIndex = () => {
-    if (isStep1Done && isStep2Done) return 2; // Step 3 index
-    if (isStep1Done) return 1; // Step 2 index
-    return 0; // Step 1 index
+    if (isStep1Done && isStep2Done) return 2;
+    if (isStep1Done) return 1;
+    return 0;
   };
 
   const activeStepIndex = getDynamicActiveStepIndex();
@@ -686,11 +662,11 @@ export const RevFlowBuilder: React.FC = () => {
           Mix, Match, and <span className="highlight-script">Snap</span> Your Modules.
         </h2>
         <p className="builder-subtitle">
-          Simply turn on only what you need and watch your custom workflow come to life in real time with every single change.
+          Turn on only what you need and watch your clean modular tree structure layout generate instantly.
         </p>
       </div>
 
-      {/* TOP STACKED CARDS DECK CONTAINER */}
+      {/* TOP DECK CONTAINER */}
       <div className="top-steps-bar-container">
         <div className="top-steps-bar-header">
           <div className="live-preview-badge">
@@ -699,7 +675,7 @@ export const RevFlowBuilder: React.FC = () => {
           
           <motion.button 
             className={`get-started-pill-btn ${canRegister ? 'active-glow' : 'disabled-glow'}`}
-            animate={canRegister ? { scale: [1, 1.03, 1] } : { scale: 1 }}
+            animate={canRegister ? { scale: [1, 1.02, 1] } : { scale: 1 }}
             transition={{ repeat: canRegister ? Infinity : 0, duration: 2 }}
             onClick={() => {
               if (canRegister) {
@@ -711,7 +687,7 @@ export const RevFlowBuilder: React.FC = () => {
           >
             <span className="btn-text">Register Now</span>
             <span className="btn-icon-circle">
-              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                 <line x1="7" y1="17" x2="17" y2="7"></line>
                 <polyline points="7 7 17 7 17 17"></polyline>
               </svg>
@@ -719,11 +695,9 @@ export const RevFlowBuilder: React.FC = () => {
           </motion.button>
         </div>
 
-        {/* Cascading Horizontal Stack Deck Wrapper */}
         <div className="stacked-cards-deck-wrapper">
           {STEPS_DATA.map((step, index) => {
             const isActive = index === activeStepIndex;
-            
             const isCompleted = 
               (index === 0 && isStep1Done) || 
               (index === 1 && isStep2Done);
@@ -740,9 +714,8 @@ export const RevFlowBuilder: React.FC = () => {
                   <h4 className="step-card-title">{step.title}</h4>
                   <p className="step-card-desc">{step.description}</p>
                 </div>
-                {/* Green badge styling applied when completed */}
                 <div 
-                  className={`step-badge ${isCompleted ? 'active-done-green' : ''}`}
+                  className="step-badge"
                   style={isCompleted ? { backgroundColor: '#10B981', color: '#FFFFFF', borderColor: '#10B981' } : {}}
                 >
                   {isCompleted ? 'DONE ✓' : step.stepNumber}
@@ -773,11 +746,11 @@ export const RevFlowBuilder: React.FC = () => {
                 >
                   <div className="module-control-header">
                     <div className="module-titles-centered">
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                         <img 
                           src={mod.iconPath} 
                           alt={`${mod.name} icon`} 
-                          style={{ width: '20px', height: '20px', objectFit: 'contain' }}
+                          style={{ width: '18px', height: '18px', objectFit: 'contain' }}
                           onError={(e) => { (e.target as HTMLElement).style.display = 'none'; }}
                         />
                         <h4>{mod.name}</h4>
@@ -817,7 +790,7 @@ export const RevFlowBuilder: React.FC = () => {
                             <img 
                               src={addon.iconPath} 
                               alt={`${addon.name} icon`} 
-                              style={{ width: '16px', height: '16px', objectFit: 'contain' }}
+                              style={{ width: '14px', height: '14px', objectFit: 'contain' }}
                               onError={(e) => { (e.target as HTMLElement).style.display = 'none'; }}
                             />
                             <span>{addon.name}</span>
@@ -843,58 +816,62 @@ export const RevFlowBuilder: React.FC = () => {
           </div>
         </div>
 
-        {/* COLUMN 2: Full Width Tree Workflow / Neural Network Preview Canvas */}
+        {/* COLUMN 2: Spacious Clean Top-Down Tree Canvas */}
         <div className="preview-canvas-expanded">
           <div className="live-preview-badge">
-            <span className="live-dot"></span> Tree Workflow / Neural Network Canvas
+            <span className="live-dot"></span> Flowchart Canvas Preview
           </div>
 
           <div className="canvas-tree-container-expanded">
             {activeModules.length === 0 ? (
               <div className="empty-preview-state">
-                <p>Toggle modules on the left to build your workflow tree diagram.</p>
+                <p>Toggle modules on the left to generate your clean top-down tree preview.</p>
               </div>
             ) : (
-              <div className="tree-stack-wrapper-clean">
-                <div className="tree-hub-node-clean">
-                  <span>Core Workspace</span>
-                  <span className="hub-lightning">⚡</span>
-                </div>
-
-                <div className="tree-connector-line"></div>
-
-                <div className="tree-modules-list-clean">
-                  {activeModuleList.map(mod => {
-                    const activeModuleAddons = mod.addons.filter(addon => activeAddons[addon.id]);
-                    const hasAddons = activeModuleAddons.length > 0;
+              <div className="flowchart-vertical-tree">
+                <div className="tree-nodes-horizontal-row">
+                  {activeModuleList.map((mod) => {
+                    const modAddons = mod.addons.filter(addon => activeAddons[addon.id]);
 
                     return (
-                      <div key={mod.id} className="tree-mod-branch-group">
-                        <div className="tree-module-box-clean">
-                          <span className="tree-mod-label">{mod.name}</span>
+                      <div key={mod.id} className="tree-core-column">
+                        {/* Core Module Top Card */}
+                        <div className="flow-core-module-card-top active-core-top">
+                          <div className="core-module-top-info">
+                            <span className="node-type-badge-top">Core Module</span>
+                            <h3 className="flow-node-title-top">{mod.name}</h3>
+                          </div>
                           <img 
                             src={mod.iconPath} 
                             alt={`${mod.name} icon`} 
-                            style={{ width: '24px', height: '24px', objectFit: 'contain' }}
+                            className="flow-node-icon-top"
                             onError={(e) => { (e.target as HTMLElement).style.display = 'none'; }}
                           />
                         </div>
 
-                        {hasAddons && (
-                          <div className="tree-addons-subbranch">
-                            {activeModuleAddons.map(addon => (
-                              <div key={addon.id} className="tree-addon-box-clean">
-                                <span className="tree-addon-label">{addon.name}</span>
+                        {/* Add-ons Sub-branch */}
+                        <div className="tree-addons-subbranch">
+                          {modAddons.length === 0 ? (
+                            <div style={{ fontSize: '9.5px', color: '#94a3b8', fontStyle: 'italic', textAlign: 'center', padding: '4px 0' }}>
+                              No add-ons
+                            </div>
+                          ) : (
+                            modAddons.map((addon) => (
+                              <div key={addon.id} className="flow-addon-child-card-clean">
+                                <div className="addon-child-info">
+                                  <span className="addon-badge-label-clean">Add-on</span>
+                                  <h4 className="flow-node-title-child-clean">{addon.name}</h4>
+                                </div>
                                 <img 
                                   src={addon.iconPath} 
                                   alt={`${addon.name} icon`} 
-                                  style={{ width: '18px', height: '18px', objectFit: 'contain' }}
+                                  className="flow-node-icon-child-clean"
                                   onError={(e) => { (e.target as HTMLElement).style.display = 'none'; }}
                                 />
                               </div>
-                            ))}
-                          </div>
-                        )}
+                            ))
+                          )}
+                        </div>
                       </div>
                     );
                   })}

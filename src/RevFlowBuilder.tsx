@@ -2,9 +2,11 @@ import React, { useState, useRef, useEffect, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import './RevFlowBuilder.css';
 
-interface Addon {
+interface AddonConfig {
   id: string;
   name: string;
+  description: string;
+  iconPath: string;
 }
 
 interface ModuleConfig {
@@ -12,7 +14,7 @@ interface ModuleConfig {
   name: string;
   description: string;
   iconPath: string;
-  addons: Addon[];
+  addons: AddonConfig[];
 }
 
 interface StepItem {
@@ -30,8 +32,8 @@ const AVAILABLE_MODULES: ModuleConfig[] = [
     description: 'Track sales, orders, and point of sale.',
     iconPath: '/Sales-icon.png',
     addons: [
-      { id: 'sales_pos', name: 'POS Terminal' },
-      { id: 'sales_online', name: 'Online Storefront' }
+      { id: 'sales_pos', name: 'POS Terminal', description: 'Fast checkout & cash drawer.', iconPath: '/pos-term.png' },
+      { id: 'sales_online', name: 'Online Storefront', description: 'Sync web orders directly.', iconPath: '/online stor.png' }
     ]
   },
   {
@@ -40,8 +42,8 @@ const AVAILABLE_MODULES: ModuleConfig[] = [
     description: 'Track stock, manage items and categories.',
     iconPath: '/Inventory-icon.png',
     addons: [
-      { id: 'inv_shopify', name: 'Shopify Sync' },
-      { id: 'inv_whatsapp', name: 'Whatsapp' }
+      { id: 'inv_shopify', name: 'Shopify Sync', description: 'Real-time inventory bridge.', iconPath: '/Shopify-icon.png' },
+      { id: 'inv_whatsapp', name: 'Whatsapp', description: 'Automated stock alerts.', iconPath: '/Whatsapp-icon.png' }
     ]
   },
   {
@@ -50,8 +52,8 @@ const AVAILABLE_MODULES: ModuleConfig[] = [
     description: 'Manage accounts, invoices, and ledger.',
     iconPath: '/Accounting-icon.png',
     addons: [
-      { id: 'acc_tax', name: 'Tax Calculator' },
-      { id: 'acc_invoice', name: 'Auto-Invoicing' }
+      { id: 'acc_tax', name: 'Tax Calculator', description: 'Automated regional tax rates.', iconPath: '/FBR-POS.png' },
+      { id: 'acc_invoice', name: 'Auto-Invoicing', description: 'Scheduled recurring invoices.', iconPath: '/fbr-invoice.png' }
     ]
   },
   {
@@ -60,8 +62,8 @@ const AVAILABLE_MODULES: ModuleConfig[] = [
     description: 'Manage staff, attendance, and payroll.',
     iconPath: '/HR-icon.png',
     addons: [
-      { id: 'hr_payroll', name: 'Advanced Payroll' },
-      { id: 'hr_attendance', name: 'Biometric Sync' }
+      { id: 'hr_payroll', name: 'Advanced Payroll', description: 'Deductions & bonuses handling.', iconPath: '/hr-payroll.png' },
+      { id: 'hr_attendance', name: 'Biometric Sync', description: 'Clock-in logs tracking.', iconPath: '/CRM.png' }
     ]
   },
   {
@@ -70,8 +72,8 @@ const AVAILABLE_MODULES: ModuleConfig[] = [
     description: 'Manage multiple locations seamlessly.',
     iconPath: '/Multibranch-icon.png',
     addons: [
-      { id: 'mb_warehouse', name: 'Central Warehouse' },
-      { id: 'mb_currency', name: 'Multi-Currency' }
+      { id: 'mb_warehouse', name: 'Central Warehouse', description: 'Inter-branch stock transfers.', iconPath: '/fbr-auditready.png' },
+      { id: 'mb_currency', name: 'Multi-Currency', description: 'Exchange rate conversions.', iconPath: '/multi-curr.png' }
     ]
   }
 ];
@@ -147,14 +149,10 @@ const STEPS_DATA: StepItem[] = [
 ];
 
 export const RevFlowBuilder: React.FC = () => {
-  // 1. Initialized with empty array so NO modules are selected initially
   const [activeModules, setActiveModules] = useState<string[]>([]);
   const [expandedModule, setExpandedModule] = useState<string | null>(null);
-  
-  // 2. Initialized to 0 so NO seats are selected initially
   const [seats, setSeats] = useState<number>(0);
 
-  // 3. Initialized with all add-ons set to false
   const [activeAddons, setActiveAddons] = useState<Record<string, boolean>>({
     sales_pos: false,
     sales_online: false,
@@ -217,34 +215,40 @@ export const RevFlowBuilder: React.FC = () => {
     [activeModules]
   );
 
+  // Robust relative offset coordinate mapping for SVG bezier paths
   useEffect(() => {
     const updatePaths = () => {
       const container = containerRef.current;
       const rootEl = rootRef.current;
       if (!container || !rootEl) return;
 
-      const containerRect = container.getBoundingClientRect();
-      const rootRect = rootEl.getBoundingClientRect();
+      const containerContainerRect = container.getBoundingClientRect();
+      const getRelativeCoords = (el: HTMLElement) => {
+        const rect = el.getBoundingClientRect();
+        return {
+          x: rect.left - containerContainerRect.left + container.scrollLeft + rect.width / 2,
+          top: rect.top - containerContainerRect.top + container.scrollTop,
+          bottom: rect.bottom - containerContainerRect.top + container.scrollTop
+        };
+      };
 
-      const rootX = rootRect.left + rootRect.width / 2 - containerRect.left + container.scrollLeft;
-      const rootY = rootRect.bottom - containerRect.top + container.scrollTop;
+      const rootCoords = getRelativeCoords(rootEl);
+      const rootX = rootCoords.x;
+      const rootY = rootCoords.bottom;
 
       const newPaths: { id: string; d: string }[] = [];
 
       activeModuleList.forEach((mod) => {
         const modEl = moduleRefs.current[mod.id];
         if (modEl) {
-          const modRect = modEl.getBoundingClientRect();
-          
-          const modTopX = modRect.left + modRect.width / 2 - containerRect.left + container.scrollLeft;
-          const modTopY = modRect.top - containerRect.top + container.scrollTop;
-
-          const modBottomX = modTopX;
-          const modBottomY = modRect.bottom - containerRect.top + container.scrollTop;
+          const modCoords = getRelativeCoords(modEl);
+          const modTopX = modCoords.x;
+          const modTopY = modCoords.top;
+          const modBottomY = modCoords.bottom;
 
           const deltaYRoot = modTopY - rootY;
-          const controlY1 = rootY + deltaYRoot * 0.35;
-          const controlY2 = modTopY - deltaYRoot * 0.35;
+          const controlY1 = rootY + deltaYRoot * 0.4;
+          const controlY2 = modTopY - deltaYRoot * 0.4;
           const curveMidX = (rootX + modTopX) / 2;
 
           newPaths.push({
@@ -256,18 +260,17 @@ export const RevFlowBuilder: React.FC = () => {
           modAddons.forEach((addon) => {
             const addonEl = addonRefs.current[addon.id];
             if (addonEl) {
-              const addonRect = addonEl.getBoundingClientRect();
-              
-              const addonTopX = addonRect.left + addonRect.width / 2 - containerRect.left + container.scrollLeft;
-              const addonTopY = addonRect.top - containerRect.top + container.scrollTop;
+              const addonCoords = getRelativeCoords(addonEl);
+              const addonTopX = addonCoords.x;
+              const addonTopY = addonCoords.top;
 
               const deltaYAddon = addonTopY - modBottomY;
-              const cpY1 = modBottomY + deltaYAddon * 0.5;
-              const cpY2 = addonTopY - deltaYAddon * 0.5;
+              const cpY1 = modBottomY + deltaYAddon * 0.4;
+              const cpY2 = addonTopY - deltaYAddon * 0.4;
 
               newPaths.push({
                 id: `${mod.id}-${addon.id}`,
-                d: `M ${modBottomX} ${modBottomY} C ${modBottomX} ${cpY1}, ${addonTopX} ${cpY2}, ${addonTopX} ${addonTopY}`
+                d: `M ${modTopX} ${modBottomY} C ${modTopX} ${cpY1}, ${addonTopX} ${cpY2}, ${addonTopX} ${addonTopY}`
               });
             }
           });
@@ -277,7 +280,7 @@ export const RevFlowBuilder: React.FC = () => {
       setSvgPaths(newPaths);
     };
 
-    const timer = setTimeout(updatePaths, 80);
+    const timer = setTimeout(updatePaths, 60);
     window.addEventListener('resize', updatePaths);
     return () => {
       clearTimeout(timer);
@@ -409,10 +412,18 @@ export const RevFlowBuilder: React.FC = () => {
                             className={`addon-pill-item ${isAddonActive ? 'active' : ''}`}
                             onClick={(e) => { e.stopPropagation(); toggleAddon(addon.id); }}
                           >
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                              <img 
+                                src={addon.iconPath} 
+                                alt={`${addon.name} icon`} 
+                                style={{ width: '14px', height: '14px', objectFit: 'contain' }}
+                                onError={(e) => { (e.target as HTMLElement).style.display = 'none'; }}
+                              />
+                              <span>{addon.name}</span>
+                            </div>
                             <div className={`custom-checkbox-clean ${isAddonActive ? 'checked' : ''}`}>
                               {isAddonActive && <span>✓</span>}
                             </div>
-                            <span>{addon.name}</span>
                           </div>
                         );
                       })}
@@ -465,7 +476,7 @@ export const RevFlowBuilder: React.FC = () => {
                     return (
                       <div key={mod.id} className="mindmap-module-branch">
                         <div 
-                          className="mindmap-chip module-chip-main"
+                          className="mindmap-chip uniform-card-node"
                           ref={el => { moduleRefs.current[mod.id] = el; }}
                         >
                           <div className="card-connector-dot"></div>
@@ -490,10 +501,18 @@ export const RevFlowBuilder: React.FC = () => {
                                 className="addon-node-wrapper"
                                 ref={el => { addonRefs.current[addon.id] = el; }}
                               >
-                                <div className="mindmap-chip addon-chip-sub">
+                                <div className="mindmap-chip uniform-card-node addon-variant-node">
                                   <div className="card-connector-dot"></div>
                                   <div className="mindmap-node-titles">
                                     <h3>{addon.name}</h3>
+                                  </div>
+                                  <div className="card-icon-badge">
+                                    <img 
+                                      src={addon.iconPath} 
+                                      alt={`${addon.name} icon`} 
+                                      className="mindmap-node-icon"
+                                      onError={(e) => { (e.target as HTMLElement).style.display = 'none'; }}
+                                    />
                                   </div>
                                 </div>
                               </div>

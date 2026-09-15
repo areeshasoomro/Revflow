@@ -16,7 +16,7 @@
   font-family: 'Caveat', cursive;
   font-size: 64px;
   font-weight: 700;
-  color: #1a365d; /* Dark navy for default text */
+  color: #1a365d;
   margin-bottom: 10px;
   display: flex;
   align-items: center;
@@ -27,7 +27,7 @@
 }
 
 .highlight-caveat {
-  color: #2B7A9E; /* Blue shade matching the image accent */
+  color: #2B7A9E;
 }
 
 .builder-subtitle {
@@ -352,7 +352,7 @@ input:checked + .slider .slider-thumb-inner {
 .addon-pill-item {
   display: flex;
   align-items: center;
-  gap: 8px;
+  justify-content: space-between;
   background: #ffffff;
   border: 1px solid #e2e8f0;
   padding: 6px 10px;
@@ -463,7 +463,7 @@ input:checked + .slider .slider-thumb-inner {
   z-index: 2;
   padding: 50px 30px;
   width: 100%;
-  max-width: 850px;
+  max-width: 900px;
   display: flex;
   justify-content: center;
 }
@@ -472,17 +472,17 @@ input:checked + .slider .slider-thumb-inner {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 50px;
+  gap: 40px;
   width: 100%;
 }
 
 .mindmap-root-pill {
   background: #2B7A9E;
   color: #fff;
-  padding: 10px 20px;
+  padding: 8px 16px;
   border-radius: 50px;
   font-weight: 700;
-  font-size: 0.95rem;
+  font-size: 0.85rem;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -490,16 +490,16 @@ input:checked + .slider .slider-thumb-inner {
 }
 
 .root-status-dot {
-  width: 8px;
-  height: 8px;
+  width: 7px;
+  height: 7px;
   background: #4ade80;
   border-radius: 50%;
 }
 
 .mindmap-modules-flow-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(240px, 1fr));
-  gap: 40px 60px;
+  grid-template-columns: repeat(2, minmax(200px, 1fr));
+  gap: 30px 48px;
   justify-items: center;
   width: 100%;
   max-width: 750px;
@@ -514,7 +514,7 @@ input:checked + .slider .slider-thumb-inner {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 24px;
+  gap: 20px;
   position: relative;
   width: 100%;
 }
@@ -524,7 +524,7 @@ input:checked + .slider .slider-thumb-inner {
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  gap: 16px;
+  gap: 70px; /* Increased gap between child addons */
   width: 100%;
 }
 
@@ -535,55 +535,59 @@ input:checked + .slider .slider-thumb-inner {
 
 .mindmap-chip {
   position: relative;
-  background: #ffffff;
-  border: 1px solid #cbd5e1;
-  border-radius: 12px;
-  padding: 10px 14px;
   display: flex;
   align-items: center;
-  gap: 10px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.02);
 }
 
 .card-connector-dot {
   position: absolute;
-  top: -4px;
+  top: -6px;
   left: 50%;
   transform: translateX(-50%);
-  width: 8px;
-  height: 8px;
+  width: 12px;
+  height: 12px;
   background-color: #1e3a5f;
-  border: 1.5px solid #ffffff;
+  border: 2px solid #ffffff;
   border-radius: 50%;
   z-index: 3;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-.module-chip-main {
-  border-color: #2B7A9E;
+/* Reduced Size Uniform Styling for Both Core Modules & Add-ons in Tree Canvas */
+.uniform-card-node {
+  background: #eef4f8;
+  border: 2px solid #2B7A9E;
+  border-radius: 16px;
   width: 100%;
-  max-width: 260px;
-  justify-content: space-between;
-}
-
-.addon-chip-sub {
-  border-style: dashed;
-  background: #ffffff;
-  min-width: 110px;
+  max-width: 120px;
+  min-height: 98px;
+  padding: 12px 8px;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 4px 12px rgba(43, 122, 158, 0.08);
 }
 
-.mindmap-node-titles h3 {
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: #1e293b;
+.addon-variant-node {
+  background: #ffffff;
+  border: 2px dashed #2B7A9E;
+}
+
+.uniform-card-node .mindmap-node-titles h3 {
+  font-family: 'Caveat', cursive;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #1a365d;
+  font-style: normal;
+  line-height: 1.1;
+  text-align: center;
   margin: 0;
-  font-style: italic;
-  white-space: nowrap;
 }
 
-.mindmap-node-icon {
-  width: 28px;
-  height: 28px;
+.uniform-card-node .mindmap-node-icon {
+  width: 32px;
+  height: 32px;
   object-fit: contain;
 }
 
@@ -600,7 +604,7 @@ input:checked + .slider .slider-thumb-inner {
 .bezier-path-line {
   fill: none;
   stroke: #7bb2c9;
-  stroke-width: 2;
+  stroke-width: 2.5;
   stroke-dasharray: 4 4;
   opacity: 0.85;
 }

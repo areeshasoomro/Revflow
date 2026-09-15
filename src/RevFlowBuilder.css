@@ -251,7 +251,7 @@ input:checked + .slider .slider-thumb-inner { transform: translateX(18px); }
 }
 .seat-buttons button:hover { background: #f1f5f9; }
 
-/* --- CLEAN, SPACIOUS TOP-DOWN TREE CANVAS --- */
+/* --- OCTOPUS-STYLE DOTTED TREE CANVAS --- */
 .preview-canvas-expanded {
   background: var(--white); 
   border-radius: 20px; 
@@ -282,19 +282,19 @@ input:checked + .slider .slider-thumb-inner { transform: translateX(18px); }
 
 .empty-preview-state { text-align: center; color: #64748b; padding: 60px 16px; font-size: 13.5px; }
 
-/* Top-Down Tree Container Layout with generous padding */
+/* Top-Down Tree Container Layout with Dotted Octopus Connectors */
 .flowchart-vertical-tree {
   display: flex;
   flex-direction: column;
   width: 100%;
-  max-width: 1040px;
-  gap: 22px;
+  max-width: 1080px;
+  gap: 24px;
   position: relative;
   align-items: center;
-  padding-top: 16px;
+  padding-top: 24px;
 }
 
-/* Horizontal top master trunk bar connecting down to all core cards */
+/* Master horizontal trunk bar (Solid line connecting top modules) */
 .flowchart-vertical-tree::before {
   content: '';
   position: absolute;
@@ -302,14 +302,15 @@ input:checked + .slider .slider-thumb-inner { transform: translateX(18px); }
   left: 60px;
   right: 60px;
   height: 2px;
-  background-color: #cbd5e1;
+  background-color: var(--secondary-blue);
+  opacity: 0.4;
 }
 
 .tree-nodes-horizontal-row {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  gap: 18px;
+  gap: 20px;
   width: 100%;
 }
 
@@ -323,35 +324,31 @@ input:checked + .slider .slider-thumb-inner { transform: translateX(18px); }
   position: relative;
 }
 
-/* Vertical tick from master bar down to core card */
+/* Vertical solid tick from master bar down to core card */
 .tree-core-column::before {
   content: '';
   position: absolute;
-  top: -16px;
+  top: -24px;
   left: 50%;
   width: 2px;
-  height: 16px;
-  background-color: #cbd5e1;
+  height: 24px;
+  background-color: var(--secondary-blue);
+  opacity: 0.5;
 }
 
 /* Core Module Node Card */
 .flow-core-module-card-top {
   background: #f8fafc;
-  border: 1.5px solid var(--border-color);
-  border-radius: 12px;
+  border: 2px solid var(--secondary-blue);
+  border-radius: 14px;
   padding: 12px 14px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+  box-shadow: 0 4px 12px rgba(43, 122, 158, 0.08);
   box-sizing: border-box;
   z-index: 2;
-}
-
-.flow-core-module-card-top.active-core-top {
-  border-color: var(--secondary-blue);
-  background: #f0f7fb;
 }
 
 .core-module-top-info {
@@ -364,13 +361,13 @@ input:checked + .slider .slider-thumb-inner { transform: translateX(18px); }
   font-size: 7px;
   font-weight: 700;
   letter-spacing: 0.4px;
-  color: #64748b;
+  color: var(--secondary-blue);
   text-transform: uppercase;
 }
 
 .flow-node-title-top {
   font-family: 'Caveat', cursive;
-  font-size: 19px;
+  font-size: 20px;
   font-weight: 700;
   color: var(--primary-navy);
   margin: 0;
@@ -383,39 +380,48 @@ input:checked + .slider .slider-thumb-inner { transform: translateX(18px); }
   object-fit: contain;
 }
 
-/* Add-ons Sub-Branch Container under each Core card with increased spacing */
+/* Add-ons Sub-Branch Container with DOTTED octopus connector lines */
 .tree-addons-subbranch {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  width: 92%;
-  margin-top: 14px;
+  gap: 12px;
+  width: 90%;
+  margin-top: 18px;
   position: relative;
 }
 
-/* Vertical line hanging down from core card to addons */
+/* Dotted vertical trunk line hanging down from core card */
 .tree-addons-subbranch::before {
   content: '';
   position: absolute;
-  top: -14px;
+  top: -18px;
   left: 50%;
   width: 2px;
-  height: 14px;
-  background-color: var(--secondary-blue);
+  height: 18px;
+  border-left: 2px dashed var(--secondary-blue);
+  background-color: transparent;
+  opacity: 0.7;
 }
 
-/* Child Add-on Card */
+/* Child Add-on Card with subtle dashed left/top connector accent */
 .flow-addon-child-card-clean {
   background: #ffffff;
-  border: 1.5px solid var(--border-color);
-  border-radius: 9px;
-  padding: 9px 12px;
+  border: 1.5px dashed var(--secondary-blue);
+  border-radius: 10px;
+  padding: 10px 12px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 100%;
   box-sizing: border-box;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.01);
+  box-shadow: 0 2px 6px rgba(27, 54, 93, 0.03);
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.flow-addon-child-card-clean:hover {
+  background: #f8fbff;
+  border-style: solid;
 }
 
 .addon-child-info {
@@ -426,15 +432,15 @@ input:checked + .slider .slider-thumb-inner { transform: translateX(18px); }
 
 .addon-badge-label-clean {
   font-size: 6.5px;
-  font-weight: 600;
-  color: #94a3b8;
+  font-weight: 700;
+  color: var(--secondary-blue);
   text-transform: uppercase;
   letter-spacing: 0.3px;
 }
 
 .flow-node-title-child-clean {
   font-family: 'Caveat', cursive;
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 700;
   color: var(--primary-navy);
   margin: 0;

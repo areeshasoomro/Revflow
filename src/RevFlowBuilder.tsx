@@ -659,10 +659,10 @@ export const RevFlowBuilder: React.FC = () => {
     <section className="revflow-builder-section">
       <div className="builder-header-wrapper">
         <h2 className="builder-main-title">
-          Mix, Match, and <span className="highlight-script">Snap</span> Your Modules.
+          Modular <span className="highlight-script">Ecosystem</span> Tree.
         </h2>
         <p className="builder-subtitle">
-          Turn on only what you need and watch your clean modular tree structure layout generate instantly.
+          Interactive system architecture view with linked branching nodes.
         </p>
       </div>
 
@@ -767,7 +767,7 @@ export const RevFlowBuilder: React.FC = () => {
                         <input type="checkbox" checked={isActive} onChange={() => toggleModule(mod.id)} />
                         <span className="slider round">
                           <span className="slider-thumb-inner">
-                            {isActive ? '👍🏻' : ''}
+                            {isActive ? '✓' : ''}
                           </span>
                         </span>
                       </label>
@@ -816,16 +816,16 @@ export const RevFlowBuilder: React.FC = () => {
           </div>
         </div>
 
-        {/* COLUMN 2: Spacious Clean Top-Down Tree Canvas */}
+        {/* COLUMN 2: Octopus-Style Dotted Tree Canvas */}
         <div className="preview-canvas-expanded">
           <div className="live-preview-badge">
-            <span className="live-dot"></span> Flowchart Canvas Preview
+            <span className="live-dot"></span> System Tree Preview
           </div>
 
           <div className="canvas-tree-container-expanded">
             {activeModules.length === 0 ? (
               <div className="empty-preview-state">
-                <p>Toggle modules on the left to generate your clean top-down tree preview.</p>
+                <p>Toggle modules on the left to generate your connected tree architecture.</p>
               </div>
             ) : (
               <div className="flowchart-vertical-tree">
@@ -836,7 +836,7 @@ export const RevFlowBuilder: React.FC = () => {
                     return (
                       <div key={mod.id} className="tree-core-column">
                         {/* Core Module Top Card */}
-                        <div className="flow-core-module-card-top active-core-top">
+                        <div className="flow-core-module-card-top">
                           <div className="core-module-top-info">
                             <span className="node-type-badge-top">Core Module</span>
                             <h3 className="flow-node-title-top">{mod.name}</h3>
@@ -849,7 +849,7 @@ export const RevFlowBuilder: React.FC = () => {
                           />
                         </div>
 
-                        {/* Add-ons Sub-branch */}
+                        {/* Add-ons Sub-branch with Dotted Connector Lines */}
                         <div className="tree-addons-subbranch">
                           {modAddons.length === 0 ? (
                             <div style={{ fontSize: '9.5px', color: '#94a3b8', fontStyle: 'italic', textAlign: 'center', padding: '4px 0' }}>
